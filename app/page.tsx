@@ -19,7 +19,8 @@ export default function Landing() {
       api.start({ y: down && velocity[1] <= 0.6 ? my : 0, immediate: down });
       if (velocity[1] > 1 && !down) {
         api({ y: -window.innerHeight, opacity: 0 });
-        setTimeout(() => router.push("/home"), 150);
+        // console.log((window.innerHeight + my) / window.innerHeight);
+        setTimeout(() => router.push("/home"), 150 * (window.innerHeight + my) / window.innerHeight);
       }
     }
   );
