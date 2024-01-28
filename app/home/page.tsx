@@ -3,8 +3,8 @@ import React, { useRef } from "react";
 import Image from "next/image";
 
 export default function Home() {
-  const contactRef = useRef(null);
-  const scrollToBottom = () => {
+  const contactRef = useRef<HTMLDivElement>(null);
+  const scrollToBottom = (): void => {
     contactRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
