@@ -23,6 +23,7 @@ const params = {
 }
 
 export const getTicker = (ticker: string) => {
+  // axios.get('')
   // const url = 'https://query1.finance.yahoo.com/v8/finance/chart/' + ticker;
   // return axios.get(url, {
   //   headers,
