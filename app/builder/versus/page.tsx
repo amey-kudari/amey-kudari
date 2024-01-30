@@ -5,6 +5,7 @@ import { TickerSelectBox } from "./components/TickerSelectBox";
 import { CountrySelect } from "./components/CountrySelect";
 import { LuSwords } from "react-icons/lu";
 import axios from "axios";
+import { Triangle } from "react-loader-spinner";
 
 import {
   LineChart,
@@ -17,7 +18,13 @@ import {
   Label,
 } from "recharts";
 
-const StockChart = ({ chartData, label }: { chartData: number[], label: string }) => {
+const StockChart = ({
+  chartData,
+  label,
+}: {
+  chartData: number[];
+  label: string;
+}) => {
   return (
     <LineChart
       width={800}
@@ -43,6 +50,8 @@ const Page = () => {
   const [chartData, setChartData] = useState<number[]>([]);
   const [error, setError] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     if (ticker1 && ticker2) {
       const requests = [
@@ -53,6 +62,7 @@ const Page = () => {
         requests.push(axios.get("/api/usdinr"));
       }
       setError(false);
+      setLoading(true);
       Promise.all(requests)
         .then((res) => {
           const stock1 = res[0].data.reverse();
@@ -76,7 +86,8 @@ const Page = () => {
         .catch((err) => {
           // console.log("ERROR :/");
           setError(true);
-        });
+        })
+        .finally(() => setLoading(false));
     } else setChartData([]);
   }, [ticker1, ticker2, country1, country2]);
 
@@ -112,18 +123,33 @@ const Page = () => {
           />
         </div>
       </div>
-      {error ? <h1 className="text-center">Error loading graph, please try again</h1> : null}
+      {error ? (
+        <h1 className="text-center">Error loading graph, please try again</h1>
+      ) : null}
       {chartData.length && !error && ticker1 && ticker2 ? (
         <div className="flex items-center justify-center flex-col w-full">
-          <h1 className="text-lg">{ticker1} / {ticker2}!</h1>
+          <h1 className="text-lg">
+            {ticker1} / {ticker2}!
+          </h1>
           <sub className="mb-2">Note: increase indicates {ticker1} winning</sub>
           <div className="w-full overflow-y-auto flex items-center justify-center">
-            <StockChart chartData={chartData} label={`${ticker1}/${ticker2}`}/>
+            <StockChart chartData={chartData} label={`${ticker1}/${ticker2}`} />
           </div>
         </div>
-      ) : <>
-        {!error ? <h1>Select any 2 stocks to view results!</h1> : null}
-      </>}
+      ) : (
+        <>{!error ? <h1>Select any 2 stocks to view results!</h1> : null}</>
+      )}
+      {loading && !error ? (
+        <Triangle
+          visible={true}
+          height="80"
+          width="80"
+          color="#eee"
+          ariaLabel="triangle-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+        />
+      ) : null}
     </div>
   );
 };
