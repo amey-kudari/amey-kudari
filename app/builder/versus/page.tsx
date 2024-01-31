@@ -18,6 +18,8 @@ import {
   Label,
 } from "recharts";
 
+// const xValues = [2020, 2021, 2022, 2023, 2024];
+
 const StockChart = ({
   chartData,
   label,
@@ -25,6 +27,11 @@ const StockChart = ({
   chartData: number[];
   label: string;
 }) => {
+  const cy = (new Date).getUTCFullYear();
+  const xValues = [cy];
+  for(let i=1;i<Math.floor(chartData.length / 100);i++) xValues.push(cy-i);
+  xValues.reverse();
+
   return (
     <LineChart
       width={800}
@@ -32,7 +39,16 @@ const StockChart = ({
       data={chartData.map((value, index) => ({ index, value }))} // Add an index for X-axis
       margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
     >
-      <CartesianGrid strokeDasharray="1 1" />
+      <CartesianGrid strokeDasharray="1 1" verticalPoints={[]}/>
+      <XAxis
+        dataKey="index" // Use the "index" property as the data key
+        type="number" // Specify the type of data for the X-axis
+        domain={[0, "dataMax"]} // Set the domain to ensure all values are visible
+        tickCount={xValues.length} // Specify the number of ticks
+        ticks={xValues.map((value) => xValues.indexOf(value) * ((chartData.length / 4)))}
+        tickFormatter={(value, index) => String(xValues[index])}
+      />
+
       {/* <Tooltip /> */}
       {/* <Legend /> */}
       <Line type="monotone" dataKey="value" stroke="gray" dot={false} />
@@ -102,7 +118,7 @@ const Page = () => {
         respective USD/INR exch rates
       </h1>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-5 w-full">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-5">
         <div className="p-4 col-span-2 flex items-center justify-center flex-col">
           <CountrySelect value={country1} onSelect={setCountry1} />
           <TickerSelectBox

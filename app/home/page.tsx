@@ -1,15 +1,35 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import Image from "next/image";
+import { FaArrowRight } from "react-icons/fa";
+import { useSpring, animated } from "@react-spring/web";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+
   const contactRef = useRef<HTMLDivElement>(null);
   const scrollToBottom = (): void => {
     contactRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const [scrollUp, setScrollUp] = useState(false);
+  const scrollUpProps = useSpring({
+    transform: `translateX(${scrollUp ? "-100%" : "0%"})`,
+    config: { stiffness: 300, damping: 50, duration: 200 },
+    onRest: () => {
+      if (scrollUp) {
+        router.push("/builder");
+      }
+    },
+  });
+
+  const onViewExamples = useCallback(() => {
+    setScrollUp(true);
+  }, []);
+
   return (
-    <div>
+    <animated.div style={scrollUpProps}>
       <div className="min-h-screen w-full grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div className="min-h-screen flex justify-center items-center flex-col gap-2 px-2 py-4">
           <Image
@@ -61,6 +81,9 @@ export default function Home() {
               have keep watching!
             </li>
           </ul>
+          <div className="flex justify-start items-start w-full mt-4">
+            <button className="flex items-center gap-4 py-2 px-4 border border-zinc-400 rounded-md hover:bg-zinc-800" onClick={onViewExamples}>View Examples <FaArrowRight /></button>
+          </div>
         </div>
       </div>
       <div className="min-h-screen flex justify-center flex-col items-center p-1">
@@ -325,6 +348,6 @@ export default function Home() {
           </li>
         </ul>
       </div>
-    </div>
+    </animated.div>
   );
 }
