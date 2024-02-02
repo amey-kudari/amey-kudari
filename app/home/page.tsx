@@ -82,7 +82,7 @@ export default function Home() {
             </li>
           </ul>
           <div className="flex justify-start items-start w-full mt-4">
-            <button className="flex items-center gap-4 py-2 px-4 border border-zinc-400 rounded-md hover:bg-zinc-800" onClick={onViewExamples}>View Examples <FaArrowRight /></button>
+            <button className="flex items-center gap-4 py-2 px-4 border border-zinc-400 rounded-md hover:bg-zinc-800" onClick={onViewExamples}>Fun Stuff! <FaArrowRight /></button>
           </div>
         </div>
       </div>
