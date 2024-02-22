@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Triangle } from "react-loader-spinner";
 
 export const EnterRoomForm = () => {
-  const [roomid, setRoomId] = useState<string>(window.localStorage.getItem("activeroom") ?? "");
+  const [roomid, setRoomId] = useState<string>();
   const [passcode, setPassCode] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
 
