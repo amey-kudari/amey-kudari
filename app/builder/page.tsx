@@ -44,6 +44,18 @@ const Page = () => {
           </p>
         </button>
         <button
+          className="py-4 px-6 border-zinc-400 rounded-lg m-6 border-2 hover:bg-zinc-800 group"
+          onClick={() => setRedirectUrl("/builder/versus")}
+        >
+          <h1 className="text-4xl mb-2">Movie Room!</h1>
+          <p className="text-zinc-500">
+            Movieroom lets you list, review or judge, and track who has watched how much of every movie / series you list! You can also archive them for later! 
+          </p>
+          <p className="text-zinc-500 group-hover:text-white">
+            Note: under development, ETA: end of feb, 2024. Highly unstable till then and very limited features. Created rooms will remain
+          </p>
+        </button>
+        <button
           className="py-4 px-6 border-zinc-400 rounded-lg m-6 border-2 hover:black group"
           disabled
         >

@@ -33,18 +33,22 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>,
 ) {
-    const { roomid, pass } = req.query;
-    await client.connect();
-    if(!roomid || !pass){
+    const { roomid, movie } = req.body;
+    if(!roomid || !movie){
       res.status(400).json({error: true});
       return;
     }
 
+    await client.connect();
+    
+
     try {
-      const rooms = await movieRoom.find({roomid}).toArray();
-      if(rooms.length > 0 && (rooms[0].pass1 === pass || rooms[0].pass2 === pass)){
-        res.status(200).json({error: false, data : {...rooms[0], user : rooms[0].pass1 === pass ? rooms[0].user1 : rooms[0].user2 }});
-      } else res.status(400).json({error: true});
+      const result = await movieRoom.updateOne({ roomid }, { $push: { movies: movie } });
+      res.status(200).json({error: false, data: result});
+      // const rooms = await movieRoom.find({roomid}).toArray();
+      // if(rooms.length > 0 && (rooms[0].pass1 === pass || rooms[0].pass2 === pass)){
+      //   res.status(200).json({error: false, data : {...rooms[0], user : rooms[0].pass1 === pass ? rooms[0].user1 : rooms[0].user2 }});
+      // } else res.status(400).json({error: true});
   } catch {
     res.status(500).json({error: true});
   }
