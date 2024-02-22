@@ -28,7 +28,7 @@ export const CreateRoom = () => {
         .post("/api/movieRoom/create", { user1, pass1, user2, pass2 })
         .then((res) => {
           console.log(res);
-          localStorage.setItem('activeroom', res.data.roomid);
+          window.localStorage.setItem('activeroom', res.data.roomid);
           setRoomId(res.data.roomid);
         })
         .catch((err) => console.log("ERROR", err))

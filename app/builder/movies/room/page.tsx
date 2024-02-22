@@ -28,7 +28,7 @@ const Page = () => {
 
   const [loading, setloading] = useState(false);
   useEffect(() => {
-    const roomString = localStorage.getItem("room");
+    const roomString = window.localStorage.getItem("room");
     if (!roomString) {
       router.push("/builder/movies");
     } else setRoom(JSON.parse(roomString));
@@ -41,7 +41,7 @@ const Page = () => {
       .get(`/api/movieRoom/getRoom?roomid=${roomid}&pass=${pass}`)
       .then((res) => {
         if (res.data?.data) {
-          localStorage.setItem("room", JSON.stringify(res.data.data));
+          window.localStorage.setItem("room", JSON.stringify(res.data.data));
           setRoom(res.data.data);
         }
       })

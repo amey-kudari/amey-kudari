@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Triangle } from "react-loader-spinner";
 
 export const EnterRoomForm = () => {
-  const [roomid, setRoomId] = useState<string>(localStorage.getItem("activeroom") ?? "");
+  const [roomid, setRoomId] = useState<string>(window.localStorage.getItem("activeroom") ?? "");
   const [passcode, setPassCode] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -19,7 +19,7 @@ export const EnterRoomForm = () => {
         .get(`/api/movieRoom/getRoom?roomid=${roomid}&pass=${passcode}`)
         .then((res) => {
           console.log("AMEY", res);
-          localStorage.setItem("room", JSON.stringify(res.data.data));
+          window.localStorage.setItem("room", JSON.stringify(res.data.data));
           router.push("/builder/movies/room");
         })
         .catch(() => {
@@ -34,7 +34,7 @@ export const EnterRoomForm = () => {
     const roomidFromParams = new URLSearchParams(window?.location?.search).get(
       "roomid"
     );
-    const roomIdFromLC = localStorage.getItem("activeroom");
+    const roomIdFromLC = window.localStorage.getItem("activeroom");
     const computedRoomId = roomidFromParams ?? roomIdFromLC;
     if (computedRoomId) setRoomId(computedRoomId);
   }, []);
