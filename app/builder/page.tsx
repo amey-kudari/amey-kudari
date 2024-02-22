@@ -45,7 +45,7 @@ const Page = () => {
         </button>
         <button
           className="py-4 px-6 border-zinc-400 rounded-lg m-6 border-2 hover:bg-zinc-800 group"
-          onClick={() => setRedirectUrl("/builder/versus")}
+          onClick={() => setRedirectUrl("/builder/movies")}
         >
           <h1 className="text-4xl mb-2">Movie Room!</h1>
           <p className="text-zinc-500">
