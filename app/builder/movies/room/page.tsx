@@ -1,7 +1,7 @@
 "use client";
 
 // libs
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 // components
 import Link from "next/link";
@@ -15,6 +15,7 @@ import { ListItem } from "./components/ListItem";
 const Page = () => {
   const router = useRouter();
 
+  const [filter, setFilter] = useState("all");
   const [room, setRoom] = useState({
     user1: "",
     user2: "",
@@ -37,22 +38,26 @@ const Page = () => {
     } else setRoom(JSON.parse(roomString));
   }, [router]);
 
-  const updateRoom = useCallback((cb?: () => void) => {
-    const roomid = room.roomid;
-    const pass = room.user == room.user1 ? room.pass1 : room.pass2;
-    axios
-      .get(`/api/movieRoom/getRoom?roomid=${roomid}&pass=${pass}`)
-      .then((res) => {
-        if (res.data?.data) {
-          window.localStorage.setItem("room", JSON.stringify(res.data.data));
-          setRoom(res.data.data);
-        }
-      }).catch(err => {})
-      .finally(() => {
-        if (loading) setloading(false);
-        if(cb) cb();
-      });
-  }, [room, loading]);
+  const updateRoom = useCallback(
+    (cb?: () => void) => {
+      const roomid = room.roomid;
+      const pass = room.user == room.user1 ? room.pass1 : room.pass2;
+      axios
+        .get(`/api/movieRoom/getRoom?roomid=${roomid}&pass=${pass}`)
+        .then((res) => {
+          if (res.data?.data) {
+            window.localStorage.setItem("room", JSON.stringify(res.data.data));
+            setRoom(res.data.data);
+          }
+        })
+        .catch((err) => {})
+        .finally(() => {
+          if (loading) setloading(false);
+          if (cb) cb();
+        });
+    },
+    [room, loading]
+  );
 
   const [selectedMovie, setSelectedMovie] = useState("");
 
@@ -115,12 +120,61 @@ const Page = () => {
     [room, updateRoom]
   );
 
-  const movies = room.movies ?? [];
+  const movies = useMemo(() => room.movies ?? [], [room]);
+
+  const filteredMovies = useMemo(
+    () =>
+      movies.filter((movie: { w1: number; w2: number }) => {
+        const w = room.user === room.user1 ? movie.w1 : movie.w2;
+        if (filter === "new" && w > 0) return false;
+        if (filter === "watching" && (w === 0 || w === 100)) return false;
+        return true;
+      }),
+    [filter, room, movies]
+  );
+
   return (
-    <div className={`min-h-screen flex flex-col items-center ${movies.length === 0 ? 'justify-center' : 'pt-12'} ${movies.length < 8 ? 'pt-48' : ''}`}>
+    <div
+      className={`min-h-screen flex flex-col items-center ${
+        movies.length === 0 ? "justify-center" : "pt-12"
+      } ${movies.length < 8 ? "pt-48" : ""}`}
+    >
       <h1 className="text-3xl mb-4">
         Room of {room.user1.toUpperCase()} and {room.user2.toUpperCase()}!
       </h1>
+      <div className="flex w-full sm:w-1/2 p-2 mb-2">
+        <div className="flex-1"></div>
+        <button
+          className={`px-6 py-2 border-black border rounded-l-full pl-8 ${
+            filter === "all"
+              ? "bg-slate-600 font-semibold	"
+              : "bg-slate-500 hover:bg-slate-700"
+          }`}
+          onClick={() => setFilter("all")}
+        >
+          All
+        </button>
+        <button
+          className={`px-6 py-2 border-black border border-l-0 border-r-0 ${
+            filter === "watching"
+              ? "bg-slate-600 font-semibold	"
+              : "bg-slate-500 hover:bg-slate-700"
+          }`}
+          onClick={() => setFilter("watching")}
+        >
+          Watching
+        </button>
+        <button
+          className={`px-6 py-2 border-black border rounded-r-full pr-8 ${
+            filter === "new"
+              ? "bg-slate-600 font-semibold	"
+              : "bg-slate-500 hover:bg-slate-700"
+          }`}
+          onClick={() => setFilter("new")}
+        >
+          New
+        </button>
+      </div>
       {loading ? (
         <Triangle
           visible={true}
@@ -133,9 +187,9 @@ const Page = () => {
         />
       ) : (
         <div className="w-full flex flex-col items-center">
-          {movies.length ? (
+          {filteredMovies.length ? (
             <ul className="w-full sm:w-1/2 p-2">
-              {movies.map(
+              {filteredMovies.map(
                 (movie: {
                   name: string;
                   addedBy: string;
@@ -156,7 +210,11 @@ const Page = () => {
               )}
             </ul>
           ) : (
-            <h2>Movies either of you add will show up here!</h2>
+            <h2>
+              {movies.length
+                ? "All movies are filtered out, please select a different filter"
+                : "Movies either of you add will show up here!"}
+            </h2>
           )}
 
           <hr className="border border-slate-900 w-full sm:w-1/2 mb-4 mt-4" />
