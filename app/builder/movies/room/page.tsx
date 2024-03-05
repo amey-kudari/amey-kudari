@@ -2,16 +2,16 @@
 
 // libs
 import { useCallback, useEffect, useMemo, useState, useRef } from "react";
+import axios from "axios";
 
 // components
-import Link from "next/link";
 import { Triangle } from "react-loader-spinner";
-import { useRouter } from "next/navigation";
-import axios from "axios";
-import { MdDelete } from "react-icons/md";
-import { FaCalendarCheck, FaCalendarMinus } from "react-icons/fa";
 import { ListItem } from "./components/ListItem";
 import Image from "next/image";
+import { FaPaintBrush, FaPoop } from "react-icons/fa";
+
+// hooks
+import { useRouter } from "next/navigation";
 
 const Page = () => {
   const router = useRouter();
@@ -135,6 +135,7 @@ const Page = () => {
   );
 
   const [showPoop, setShowPoop] = useState(false);
+  const [paint, setPaint] = useState(false);
   const [poopPos, setPoopPos] = useState({
     x: 0,
     y: 0,
@@ -148,36 +149,60 @@ const Page = () => {
         movies.length === 0 ? "justify-center" : "pt-12"
       } ${movies.length < 8 ? "pt-48" : ""}`}
       onClick={(e) => {
-        if (room.user1 === "potty" || room.user2 === "potty") {
+        if (showPoop) {
           setShowPoop(true);
           clearTimeout(timeoutRef.current);
-          timeoutRef.current = setTimeout(() => setShowPoop(false), 2000) as unknown as number;
+          timeoutRef.current = setTimeout(
+            () => setShowPoop(false),
+            2000
+          ) as unknown as number;
           setPoopPos({
             x: e.clientX,
             y: e.clientY,
           });
         }
       }}
-      style={room.user1 === 'potty' || room.user2 === 'potty' ? {
-        backgroundImage: 'url("/pastels.png")',
-        backgroundRepeat: 'repeat-y',
-        backgroundSize: '100% auto',
-      } : {}}
+      style={
+        paint
+          ? {
+              backgroundImage: 'url("/pastels.png")',
+              backgroundRepeat: "repeat-y",
+              backgroundSize: "100% auto",
+            }
+          : {}
+      }
     >
-      <Image
-        src="/rainbow_poop_nobg.png"
-        alt="rainbow poop for potty"
-        width={100}
-        height={100}
-        className="fixed transition-all duration-1000"
-        style={{
-          top: poopPos.y - 50 + "px",
-          left: poopPos.x - 50 + "px",
-          opacity: showPoop ? 1 : 0,
-        }}
-      />
-      {/* <img src="/rainbow_poop_nobg" alt="rainbow poop for potty"/> */}
-      <h1 className={`text-3xl mb-4 ${room.user1 === 'potty' || room.user2 ? 'text-black' : ''}`}>
+      {showPoop ? (
+        <Image
+          src="/rainbow_poop_nobg.png"
+          alt="rainbow poop for potty"
+          width={100}
+          height={100}
+          className="fixed transition-all duration-1000"
+          style={{
+            top: poopPos.y - 50 + "px",
+            left: poopPos.x - 50 + "px",
+            opacity: showPoop ? 1 : 0,
+          }}
+        />
+      ) : null}
+      <button
+        className={`fixed top-3 right-3 bg-slate-700 p-3 rounded-full bg-opacity-50 hover:bg-opacity-100 ${
+          paint ? "text-pink-500" : ""
+        }`}
+        onClick={() => setPaint((a) => !a)}
+      >
+        <FaPaintBrush size={25} />
+      </button>
+      <button
+        className={`fixed top-3 left-3 bg-slate-700 p-3 rounded-full bg-opacity-0 opacity-0 hover:bg-opacity-100 hover:opacity-100 ${
+          showPoop ? "text-pink-500" : ""
+        }`}
+        onClick={() => setShowPoop((a) => !a)}
+      >
+        <FaPoop size={25} />
+      </button>
+      <h1 className={`text-3xl mb-4 ${paint ? "text-black" : ""}`}>
         Room of {room.user1.toUpperCase()} and {room.user2.toUpperCase()}!
       </h1>
       <div className="flex w-full sm:w-1/2 p-2 mb-2">
@@ -266,7 +291,13 @@ const Page = () => {
               type="button"
               className="hover:bg-zinc-800 py-2 px-4 flex items-center"
             >
-              <h3 className={`flex-1 text-center text-2xl ${room.user1 === 'potty' || room.user2 ? 'text-black hover:text-white' : ''}`}>ADD A MOVIE</h3>
+              <h3
+                className={`flex-1 text-center text-2xl ${
+                  paint ? "text-black hover:text-white" : ""
+                }`}
+              >
+                ADD A MOVIE
+              </h3>
               <span
                 className={`h-full flex items-center justify-center text-xl transition-all duration-300 ${
                   isFormOpen ? "rotate-45" : ""

@@ -1,9 +1,12 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+// libs
+import React, { useState } from "react";
+import axios from "axios";
+
+// components
 import Link from "next/link";
 import { MdDelete } from "react-icons/md";
 import { Triangle } from "react-loader-spinner";
-import axios from "axios";
 
 export const ListItem = ({
   room,
