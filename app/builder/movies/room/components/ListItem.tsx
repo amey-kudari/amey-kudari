@@ -65,7 +65,7 @@ export const ListItem = ({
         onClick={() => setSelectedMovie(movie.name)}
       >
         <div
-          className={`grid transition-all duration-50 overflow-hidden ease-in	${
+          className={`grid overflow-hidden ${
             selectedMovie === movie.name ? "max-h-96" : "max-h-0"
           }`}
         >
@@ -77,7 +77,7 @@ export const ListItem = ({
             </Link>
           </div>
           <div className="text-left">
-            <h4>Watched by</h4>
+            <h4>Watched</h4>
             <table>
               <tr>
                 <td className="flex items-center gap-3">
