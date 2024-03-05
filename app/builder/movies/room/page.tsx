@@ -1,7 +1,7 @@
 "use client";
 
 // libs
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, useRef } from "react";
 
 // components
 import Link from "next/link";
@@ -140,6 +140,8 @@ const Page = () => {
     y: 0,
   });
 
+  const timeoutRef = useRef<number>(0);
+
   return (
     <div
       className={`min-h-screen flex flex-col items-center ${
@@ -148,7 +150,8 @@ const Page = () => {
       onClick={(e) => {
         if (room.user1 === "potty" || room.user2 === "potty") {
           setShowPoop(true);
-          setTimeout(() => setShowPoop(false), 2000);
+          clearTimeout(timeoutRef.current);
+          timeoutRef.current = setTimeout(() => setShowPoop(false), 2000) as unknown as number;
           setPoopPos({
             x: e.clientX,
             y: e.clientY,
