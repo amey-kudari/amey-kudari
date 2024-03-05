@@ -11,6 +11,7 @@ import axios from "axios";
 import { MdDelete } from "react-icons/md";
 import { FaCalendarCheck, FaCalendarMinus } from "react-icons/fa";
 import { ListItem } from "./components/ListItem";
+import Image from "next/image";
 
 const Page = () => {
   const router = useRouter();
@@ -133,12 +134,41 @@ const Page = () => {
     [filter, room, movies]
   );
 
+  const [showPoop, setShowPoop] = useState(false);
+  const [poopPos, setPoopPos] = useState({
+    x: 0,
+    y: 0,
+  });
+
   return (
     <div
       className={`min-h-screen flex flex-col items-center ${
         movies.length === 0 ? "justify-center" : "pt-12"
       } ${movies.length < 8 ? "pt-48" : ""}`}
+      onClick={(e) => {
+        if (room.user1 === "potty" || room.user2 === "potty") {
+          setShowPoop(true);
+          setTimeout(() => setShowPoop(false), 2000);
+          setPoopPos({
+            x: e.clientX,
+            y: e.clientY,
+          });
+        }
+      }}
     >
+      <Image
+        src="/rainbow_poop_nobg.png"
+        alt="rainbow poop for potty"
+        width={100}
+        height={100}
+        className="fixed transition-all duration-1000"
+        style={{
+          top: poopPos.y - 50 + "px",
+          left: poopPos.x - 50 + "px",
+          opacity: showPoop ? 1 : 0,
+        }}
+      />
+      {/* <img src="/rainbow_poop_nobg" alt="rainbow poop for potty"/> */}
       <h1 className="text-3xl mb-4">
         Room of {room.user1.toUpperCase()} and {room.user2.toUpperCase()}!
       </h1>
