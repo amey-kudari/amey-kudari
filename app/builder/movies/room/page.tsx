@@ -158,6 +158,11 @@ const Page = () => {
           });
         }
       }}
+      style={room.user1 === 'potty' || room.user2 === 'potty' ? {
+        backgroundImage: 'url("/pastels.png")',
+        backgroundRepeat: 'repeat-y',
+        backgroundSize: '100% auto',
+      } : {}}
     >
       <Image
         src="/rainbow_poop_nobg.png"
@@ -172,7 +177,7 @@ const Page = () => {
         }}
       />
       {/* <img src="/rainbow_poop_nobg" alt="rainbow poop for potty"/> */}
-      <h1 className="text-3xl mb-4">
+      <h1 className={`text-3xl mb-4 ${room.user1 === 'potty' || room.user2 ? 'text-black' : ''}`}>
         Room of {room.user1.toUpperCase()} and {room.user2.toUpperCase()}!
       </h1>
       <div className="flex w-full sm:w-1/2 p-2 mb-2">
@@ -261,7 +266,7 @@ const Page = () => {
               type="button"
               className="hover:bg-zinc-800 py-2 px-4 flex items-center"
             >
-              <h3 className="text-center text-2xl flex-1">ADD A MOVIE</h3>
+              <h3 className={`flex-1 text-center text-2xl ${room.user1 === 'potty' || room.user2 ? 'text-black hover:text-white' : ''}`}>ADD A MOVIE</h3>
               <span
                 className={`h-full flex items-center justify-center text-xl transition-all duration-300 ${
                   isFormOpen ? "rotate-45" : ""
