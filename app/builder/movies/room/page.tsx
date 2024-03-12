@@ -143,6 +143,50 @@ const Page = () => {
 
   const timeoutRef = useRef<number>(0);
 
+  const [showPoop1, setShowPoop1] = useState(false);
+  const [poopPos1, setPoopPos1] = useState({
+    x: 0,
+    y: 0,
+  });
+  const [poopPos2, setPoopPos2] = useState({
+    x: 0,
+    y: 0,
+  });
+
+  const intervalRef = useRef<number>(0);
+  useEffect(() => {
+    if (!showPoop1) clearInterval(intervalRef.current);
+    else {
+      intervalRef.current = setInterval(() => {
+        setPoopPos1({
+          x: window.innerWidth * Math.random(),
+          y: window.innerHeight * Math.random(),
+        });
+        setPoopPos2({
+          x: window.innerWidth * Math.random(),
+          y: window.innerHeight * Math.random(),
+        });
+      }, 2000) as unknown as number;
+    }
+    return () => clearInterval(intervalRef.current);
+  }, [showPoop1]);
+
+  const [looseMotionCount, setLooseMotionCount] = useState([100]);
+  const laxative = useRef<number>(0);
+  useEffect(() => {
+    if (showPoop1) {
+      laxative.current = setInterval(() => {
+        setLooseMotionCount((current) => {
+          if (current.length > 1) {
+            return current.slice(0, -1);
+          }
+          return current;
+        });
+      }, 2500) as unknown as number;
+      return () => clearInterval(laxative.current);
+    }
+  }, [showPoop1]);
+
   return (
     <div
       className={`min-h-screen flex flex-col items-center ${
@@ -150,6 +194,9 @@ const Page = () => {
       } ${movies.length < 8 ? "pt-48" : ""}`}
       onClick={(e) => {
         if (showPoop) {
+          if (room.user1 === "potty" || room.user2 === "potty") {
+            setShowPoop1(true);
+          }
           setShowPoop(true);
           clearTimeout(timeoutRef.current);
           timeoutRef.current = setTimeout(
@@ -184,7 +231,76 @@ const Page = () => {
             left: poopPos.x - 50 + "px",
             opacity: showPoop ? 1 : 0,
           }}
+          onClick={() => {
+            setLooseMotionCount((current) => [
+              ...current,
+              Math.floor(Math.random() * 200),
+            ]);
+          }}
+          onTouchStart={() => {
+            setLooseMotionCount((current) => [
+              ...current,
+              Math.floor(Math.random() * 200),
+            ]);
+          }}
         />
+      ) : null}
+
+      {showPoop1 ? (
+        <>
+          <Image
+            src="/rainbow_poop_nobg.png"
+            alt="rainbow poop for potty"
+            width={100}
+            height={100}
+            className="fixed transition-all duration-1000"
+            style={{
+              top: poopPos1.y - 50 + "px",
+              left: poopPos1.x - 50 + "px",
+              opacity: showPoop1 ? 1 : 0,
+            }}
+            onClick={() => {
+              setLooseMotionCount((current) => [
+                ...current,
+                Math.floor(Math.random() * 200),
+              ]);
+            }}
+            onTouchStart={() => {
+              setLooseMotionCount((current) => [
+                ...current,
+                Math.floor(Math.random() * 200),
+              ]);
+            }}
+          />
+          <Image
+            src="/rainbow_poop_nobg.png"
+            alt="rainbow poop for potty"
+            width={100}
+            height={100}
+            className="fixed transition-all duration-1000"
+            style={{
+              top: poopPos2.y - 50 + "px",
+              left: poopPos2.y - 50 + "px",
+              opacity: showPoop1 ? 1 : 0,
+            }}
+          />
+
+          {looseMotionCount.map((size, id) => (
+            <Image
+              key={id * 1000 + size}
+              src="/rainbow_poop_nobg.png"
+              alt="rainbow poop for potty"
+              width={100}
+              height={100}
+              className="fixed transition-all duration-1000"
+              style={{
+                top: window.innerHeight * Math.random() - 50 + "px",
+                left: window.innerWidth * Math.random() - 50 + "px",
+                opacity: showPoop1 ? 1 : 0,
+              }}
+            />
+          ))}
+        </>
       ) : null}
       <button
         className={`fixed top-3 right-3 bg-slate-700 p-3 rounded-full bg-opacity-50 hover:bg-opacity-100 ${
