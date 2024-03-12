@@ -147,7 +147,7 @@ export const ListItem = ({
                 <td className="inline-flex items-center mb-2 mr-2">
                   {room.user1}
                 </td>
-                <td className="inline-flex items-center mb-1">
+                <td className="inline-flex justify-start md:items-center mb-1 flex-col md:flex-row">
                   <input
                     className={`bg-zinc-500 border border-zinc-500 active:border-zinc-300 p-1 outline-none ${room.user === room.user1 && iloading ? 'text-slate-300' : ''}`}
                     style={{ width: "43ch" }}
@@ -160,7 +160,7 @@ export const ListItem = ({
                     }
                   />
                   {i1 !== (movie.i1 ?? "") && !iloading ? (
-                    <button className="px-2 py-1 border border-slate-500 hover:bg-slate-700" onClick={setImpressions}>
+                    <button className="px-2 py-1 border border-slate-500 hover:bg-slate-700 w-16" onClick={setImpressions}>
                       Save
                     </button>
                   ) : null}
@@ -170,10 +170,10 @@ export const ListItem = ({
                 </td>
               </tr>
               <tr>
-                <td className="inline-flex items-center mb-2 mr-2">
+                <td className="inline-flex items-center mb-2 mr-2 mt-2">
                   {room.user2}
                 </td>
-                <td className="inline-flex items-center mb-2">
+                <td className="inline-flex items-center mb-2 mt-2">
                   <input
                     className={`bg-zinc-500 border border-zinc-500 active:border-zinc-300 p-1 outline-none ${room.user === room.user2 && iloading ? 'text-slate-300' : ''}`}
                     style={{ width: "43ch" }}
