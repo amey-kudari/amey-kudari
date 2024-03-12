@@ -251,8 +251,8 @@ const Page = () => {
           <Image
             src="/rainbow_poop_nobg.png"
             alt="rainbow poop for potty"
-            width={100}
-            height={100}
+            width={150}
+            height={150}
             className="fixed transition-all duration-1000"
             style={{
               top: poopPos1.y - 50 + "px",
@@ -262,27 +262,40 @@ const Page = () => {
             onClick={() => {
               setLooseMotionCount((current) => [
                 ...current,
-                Math.floor(Math.random() * 200),
+                Math.floor(Math.random() * 150),
               ]);
             }}
             onTouchStart={() => {
               setLooseMotionCount((current) => [
                 ...current,
-                Math.floor(Math.random() * 200),
+                Math.floor(Math.random() * 150),
               ]);
             }}
           />
           <Image
             src="/rainbow_poop_nobg.png"
             alt="rainbow poop for potty"
-            width={100}
-            height={100}
+            width={150}
+            height={150}
             className="fixed transition-all duration-1000"
             style={{
               top: poopPos2.y - 50 + "px",
               left: poopPos2.y - 50 + "px",
               opacity: showPoop1 ? 1 : 0,
             }}
+            onClick={() => {
+              setLooseMotionCount((current) => [
+                ...current,
+                Math.floor(Math.random() * 150),
+              ]);
+            }}
+            onTouchStart={() => {
+              setLooseMotionCount((current) => [
+                ...current,
+                Math.floor(Math.random() * 150),
+              ]);
+            }}
+
           />
 
           {looseMotionCount.map((size, id) => (
