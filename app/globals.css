@@ -36,3 +36,20 @@ body, html{
     text-wrap: balance;
   }
 }
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #292929; 
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: #5d5d5d;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #999; 
+}
