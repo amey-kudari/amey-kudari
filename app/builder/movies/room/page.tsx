@@ -223,8 +223,8 @@ const Page = () => {
         <Image
           src="/rainbow_poop_nobg.png"
           alt="rainbow poop for potty"
-          width={100}
-          height={100}
+          width={150}
+          height={150}
           className="fixed transition-all duration-1000"
           style={{
             top: poopPos.y - 50 + "px",
@@ -290,8 +290,8 @@ const Page = () => {
               key={id * 1000 + size}
               src="/rainbow_poop_nobg.png"
               alt="rainbow poop for potty"
-              width={100}
-              height={100}
+              width={size}
+              height={size}
               className="fixed transition-all duration-1000"
               style={{
                 top: window.innerHeight * Math.random() - 50 + "px",
