@@ -39,25 +39,33 @@ const Page = () => {
     } else setRoom(JSON.parse(roomString));
   }, [router]);
 
+  const [movies, setMovies] = useState(room.movies ?? []);
+  // const movies = useMemo(() => room.movies ?? [], [room]);
+
   const updateRoom = useCallback(
     (cb?: () => void) => {
       const roomid = room.roomid;
       const pass = room.user == room.user1 ? room.pass1 : room.pass2;
-      axios
-        .get(`/api/movieRoom/getRoom?roomid=${roomid}&pass=${pass}`)
-        .then((res) => {
-          if (res.data?.data) {
-            window.localStorage.setItem("room", JSON.stringify(res.data.data));
-            setRoom(res.data.data);
-          }
-        })
-        .catch((err) => {})
-        .finally(() => {
-          if (loading) setloading(false);
-          if (cb) cb();
-        });
+      if (roomid && pass) {
+        axios
+          .get(`/api/movieRoom/getRoom?roomid=${roomid}&pass=${pass}`)
+          .then((res) => {
+            if (res.data?.data) {
+              window.localStorage.setItem(
+                "room",
+                JSON.stringify(res.data.data)
+              );
+              setMovies(res.data.data.movies ?? []);
+            }
+          })
+          .catch((err) => {})
+          .finally(() => {
+            setloading(false);
+            if (cb) cb();
+          });
+      }
     },
-    [room, loading]
+    [room]
   );
 
   const [selectedMovie, setSelectedMovie] = useState("");
@@ -72,7 +80,7 @@ const Page = () => {
     (e: any) => {
       e.preventDefault();
       const movie = { addedBy: room.user, name, url };
-      const movieExists = !!room.movies?.find?.(
+      const movieExists = !!movies?.find?.(
         (movie: { name: string }) => movie?.name === "asdfd"
       );
       if (movieExists) {
@@ -92,7 +100,7 @@ const Page = () => {
           updateRoom();
         });
     },
-    [room, name, url, updateRoom]
+    [room, movies, name, url, updateRoom]
   );
 
   const onDelete = useCallback(
@@ -121,17 +129,16 @@ const Page = () => {
     [room, updateRoom]
   );
 
-  const movies = useMemo(() => room.movies ?? [], [room]);
-
   const filteredMovies = useMemo(
     () =>
       movies.filter((movie: { w1: number; w2: number }) => {
         const w = room.user === room.user1 ? movie.w1 : movie.w2;
+        console.log(movie, w);
         if (filter === "new" && w > 0) return false;
-        if (filter === "watching" && (w === 0 || w === 100)) return false;
+        if (filter === "watching" && (w === 0 || w === 100 || !w)) return false;
         return true;
       }),
-    [filter, room, movies]
+    [filter, movies, room]
   );
 
   const [showPoop, setShowPoop] = useState(false);
@@ -295,7 +302,6 @@ const Page = () => {
                 Math.floor(Math.random() * 150),
               ]);
             }}
-
           />
 
           {looseMotionCount.map((size, id) => (

@@ -41,6 +41,12 @@ export const EnterRoomForm = () => {
 
   return (
     <>
+      <button className="fixed top-2 right-2 bg-zinc-500 w-64 p-3 hover:bg-zinc-700 hover:text-white" onClick={() => {
+        setRoomId('b8v-zkxg');
+        setPassCode('jill');
+      }}>
+        Use Demo Credentials!
+      </button>
       <form
         className="bg-zinc-950 sm:bg-zinc-900 border-zinc-800 flex flex-col p-6 m-4 w-full sm:w-1/4 mt-2 items-center"
         onSubmit={onSubmit}

@@ -92,7 +92,7 @@ export const ListItem = ({
         onClick={() => setSelectedMovie(movie.name)}
       >
         <div
-          className={`grid overflow-hidden ${
+          className={`grid overflow-y-hidden ${
             selectedMovie === movie.name ? "max-h-96" : "max-h-0"
           }`}
         >
@@ -106,6 +106,7 @@ export const ListItem = ({
           <div className="text-left">
             <h4>Watched</h4>
             <table>
+              <tbody>
               <tr>
                 <td className="flex items-center gap-3">
                   <input
@@ -118,6 +119,7 @@ export const ListItem = ({
                     } ${movie.w1 === 0 ? "accent-red-500" : ""}`}
                     value={movie.w1 ?? 0}
                     disabled={progLoading}
+                    readOnly
                   />
                   <span> by {room.user1}</span>
                 </td>
@@ -134,66 +136,62 @@ export const ListItem = ({
                     } ${movie.w2 === 0 ? "accent-red-500" : ""}`}
                     value={movie.w2 ?? 0}
                     disabled={progLoading}
+                    readOnly
                   />
                   <span> by {room.user2}</span>
                 </td>
               </tr>
+              </tbody>
             </table>
           </div>
+          <h4>Impressions</h4>
+
           <div className="text-left mt-2">
-            <h4>Impressions</h4>
-            <table>
-              <tr>
-                <td className="inline-flex items-center mb-2 mr-2">
+                <h4>
                   {room.user1}
-                </td>
-                <td className="inline-flex justify-start md:items-center mb-1 flex-col md:flex-row">
+                </h4>
+                <div>
                   <input
-                    className={`bg-zinc-500 border border-zinc-500 active:border-zinc-300 p-1 outline-none ${room.user === room.user1 && iloading ? 'text-slate-300' : ''}`}
-                    style={{ width: "43ch" }}
+                    className={`w-full md:w-2/3 bg-zinc-500 border border-zinc-500 active:border-zinc-300 p-1 outline-none ${room.user === room.user1 && iloading ? 'text-slate-300' : ''}`}
                     disabled={room.user !== room.user1 || iloading}
                     value={i1}
                     onChange={(e) =>
                       setI1((pi1) =>
-                        e.target.value.length > 40 ? pi1 : e.target.value
+                        e.target.value.length > 35 ? pi1 : e.target.value
                       )
                     }
                   />
                   {i1 !== (movie.i1 ?? "") && !iloading ? (
-                    <button className="px-2 py-1 border border-slate-500 hover:bg-slate-700 w-16" onClick={setImpressions}>
+                    <button className="px-2 py-1 border border-slate-500 hover:bg-slate-700" onClick={setImpressions}>
                       Save
                     </button>
                   ) : null}
                   {room.user === room.user1 && iloading ? (
                     <Triangle height="25" width="25" color="#fff" />
                   ) : null}
-                </td>
-              </tr>
-              <tr>
-                <td className="inline-flex items-center mb-2 mr-2 mt-2">
+                </div>
+                <h4 className="inline-flex items-center mt-2">
                   {room.user2}
-                </td>
-                <td className="inline-flex items-center mb-2 mt-2">
+                </h4>
+                <div>
                   <input
-                    className={`bg-zinc-500 border border-zinc-500 active:border-zinc-300 p-1 outline-none ${room.user === room.user2 && iloading ? 'text-slate-300' : ''}`}
-                    style={{ width: "43ch" }}
+                    className={`w-full md:w-2/3 bg-zinc-500 border border-zinc-500 active:border-zinc-300 p-1 outline-none ${room.user === room.user2 && iloading ? 'text-slate-300' : ''}`}
+                    // style={{ width: "35ch" }}
                     disabled={room.user !== room.user2 || iloading}
                     value={i2}
                     onChange={(e) =>
                       setI2((pi2) =>
-                        e.target.value.length > 40 ? pi2 : e.target.value
+                        e.target.value.length > 35 ? pi2 : e.target.value
                       )
                     }
                   />
                   {i2 !== (movie.i2 ?? "") && !iloading ? (
-                    <button className="p-2 m-2" onClick={setImpressions}>Save</button>
+                    <button className="px-2 py-1 border border-slate-500 hover:bg-slate-700" onClick={setImpressions}>Save</button>
                   ) : null}
                   {room.user === room.user2 && iloading ? (
                     <Triangle height="25" width="25" color="#fff" />
                   ) : null}
-                </td>
-              </tr>
-            </table>
+                </div>
           </div>
           <div className="flex items-center">
             <div className="flex-1"></div>
