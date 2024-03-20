@@ -103,6 +103,18 @@ const Page = () => {
             Note: All code to sprinklr projects are public, on my github
           </p>
         </button>
+        <button
+          className="py-4 px-6 border-zinc-400 rounded-lg m-6 border-2 hover:bg-zinc-800 group"
+          onClick={() => setRedirectUrl("/builder/sponsors")}
+        >
+          <h1 className="text-4xl mb-2">Sponsoring companies</h1>
+          <p className="text-zinc-500 group-hover:text-white">
+            A basic list of scraped companies arranged in order of number of sponsorships in 2024! The target year.
+          </p>
+          <p className="text-zinc-500 group-hover:text-white">
+            List last updated : 18-Mar-24
+          </p>
+        </button>
       </div>
     </animated.div>
   );
