@@ -4,6 +4,7 @@ import Image from "next/image";
 import { FaArrowRight } from "react-icons/fa";
 import { useSpring, animated } from "@react-spring/web";
 import { useRouter } from "next/navigation";
+import InHomePage from "../in/page";
 
 export default function Home() {
   const router = useRouter();
@@ -27,6 +28,8 @@ export default function Home() {
   const onViewExamples = useCallback(() => {
     setScrollUp(true);
   }, []);
+
+  return <InHomePage />
 
   return (
     <animated.div style={scrollUpProps}>
