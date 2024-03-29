@@ -33,6 +33,20 @@ const Page = () => {
       >
         <button
           className="py-4 px-6 border-zinc-400 rounded-lg m-6 border-2 hover:bg-zinc-800 group"
+          onClick={() => setRedirectUrl("/builder/toast5")}
+        >
+          <h1 className="text-4xl mb-2">Toast5</h1>
+          <p className="text-zinc-500 group-hover:text-white">
+            Extremely easy to use, while prioritizing good ux, and not
+            compromising on functionality I felt were required.
+          </p>
+          <p className="text-zinc-500 group-hover:text-white">
+            Note: Published npm package that can be used by any application.
+          </p>
+        </button>
+
+        <button
+          className="py-4 px-6 border-zinc-400 rounded-lg m-6 border-2 hover:bg-zinc-800 group"
           onClick={() => setRedirectUrl("/builder/versus")}
         >
           <h1 className="text-4xl mb-2">Versus</h1>
@@ -49,12 +63,16 @@ const Page = () => {
         >
           <h1 className="text-4xl mb-2">Movie Room!</h1>
           <p className="text-zinc-500">
-            Movieroom lets you list, review or judge, and track who has watched how much of every movie / series you list! You can also archive them for later! 
+            Movieroom lets you list, review or judge, and track who has watched
+            how much of every movie / series you list! You can also archive them
+            for later!
           </p>
           <p className="text-zinc-500 group-hover:text-white">
-            Note: under development, ETA: end of feb, 2024. Highly unstable till then and very limited features. Created rooms will remain
+            Note: under development, ETA: end of feb, 2024. Highly unstable till
+            then and very limited features. Created rooms will remain
           </p>
         </button>
+
         <button
           className="py-4 px-6 border-zinc-400 rounded-lg m-6 border-2 hover:black group"
           disabled
@@ -103,13 +121,15 @@ const Page = () => {
             Note: All code to sprinklr projects are public, on my github
           </p>
         </button>
+
         <button
           className="py-4 px-6 border-zinc-400 rounded-lg m-6 border-2 hover:bg-zinc-800 group"
           onClick={() => setRedirectUrl("/builder/sponsors")}
         >
           <h1 className="text-4xl mb-2">Sponsoring companies</h1>
           <p className="text-zinc-500 group-hover:text-white">
-            A basic list of scraped companies arranged in order of number of sponsorships in 2024! The target year.
+            A basic list of scraped companies arranged in order of number of
+            sponsorships in 2024! The target year.
           </p>
           <p className="text-zinc-500 group-hover:text-white">
             List last updated : 18-Mar-24

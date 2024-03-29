@@ -1,10 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import data from "./data.json";
-import Image from "next/image";
-import { Toast } from "./components/Toast";
 
-
-export default function Page() {
+const Page = () => {
   return (
     <div className="flex items-center justify-center flex-col">
       <h1 className="text-3xl w-full sm:w-1/2 my-2 text-center">
@@ -37,8 +36,8 @@ export default function Page() {
           </li>
         ))}
       </ul>
-      <Toast />
-      {/* <h1>{JSON.stringify(data)}</h1> */}
     </div>
   );
-}
+};
+
+export default Page;

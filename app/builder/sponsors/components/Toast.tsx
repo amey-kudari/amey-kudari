@@ -1,18 +1,45 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import styles from "./toast.module.css";
+import { TOAST_VARIANTS } from "./constants";
 
-export const Toast = ({ content = {} }) => (
-  <div
-    style={{
-      position: "fixed",
-      bottom: "min(1rem, 2vh)",
-      zIndex: 1000,
-      width: "min(25rem, 80%)",
-      right: "min(1rem, 2vh)",
-    }}
-  >
+const VARIANT_TO_ICON = {
+  [TOAST_VARIANTS.ERROR]: "/exclamation.png",
+  [TOAST_VARIANTS.INFO]: "/information.png",
+  [TOAST_VARIANTS.SUCCESS]: "/checked.png",
+};
+
+export const Toast = ({
+  message,
+  variant,
+  duration: _duration,
+  pending,
+  deleteToast,
+  options,
+}: {
+  message: string;
+  variant: TOAST_VARIANTS;
+  duration: number;
+  pending: number;
+  deleteToast: ({ message }: { message: string }) => void;
+  options: {
+    color: string;
+    backgroundColor: string;
+    progressBarColor: string;
+    duration: number;
+  };
+}) => {
+  const duration = _duration ?? options.duration;
+  const [width, setWidth] = useState("100%");
+  const timeoutRef = useRef<number>();
+  useEffect(() => {
+    setWidth("0%");
+    timeoutRef.current = setTimeout(() => {
+      deleteToast({ message });
+    }, duration) as unknown as number;
+  }, [deleteToast, message, duration]);
+  return (
     <div
       style={{
         padding: "0.75rem 1rem",
@@ -21,13 +48,11 @@ export const Toast = ({ content = {} }) => (
         gap: "1rem",
         position: "relative",
         borderRadius: "1rem",
-        backgroundColor: "rgb(39 39 42)",
+        ...options,
       }}
     >
       <Image
-        // src="/exclamation.png"
-        // src="/information.png"
-        src="/checked.png"
+        src={VARIANT_TO_ICON[variant]}
         width={20}
         height={20}
         alt="Error Logo"
@@ -36,13 +61,43 @@ export const Toast = ({ content = {} }) => (
           width: "2rem",
         }}
       />
-      <p>
-        This is a toast! the toast can be this long, or it can be shorter but
-        this is
-      </p>
-      <button className={styles.styledButton} style={{ padding: '0.5rem', borderRadius: '0.5rem' }} title="hide">
-        <Image src="/X.png" width={25} height={25} alt="Remove Popup" style={{filter: "invert(1)"}}/>
+      <p>{message}</p>
+      <button
+        className={styles.styledButton}
+        style={{ padding: "0.5rem", borderRadius: "0.5rem" }}
+        title="hide"
+        onClick={() => deleteToast({ message })}
+      >
+        <Image
+          src="/X.png"
+          width={30}
+          height={30}
+          alt="Remove Popup"
+          style={{ filter: "invert(1)" }}
+        />
       </button>
+      <div
+        style={{
+          position: "absolute",
+          bottom: 0,
+          width: "calc(100% - 2rem)",
+          height: "0.2rem",
+          backgroundColor: options.backgroundColor,
+          overflow: "hidden",
+        }}
+        title={`Toast will close in ${pending} seconds`}
+        aria-label={`Toast will close in ${pending} seconds`}
+      >
+        <div
+          style={{
+            backgroundColor: options.progressBarColor,
+            height: "100%",
+            width,
+            float: "right",
+            transition: `width ${duration / 1000}s linear`,
+          }}
+        ></div>
+      </div>
     </div>
-  </div>
-);
+  );
+};

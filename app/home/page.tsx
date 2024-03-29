@@ -29,7 +29,7 @@ export default function Home() {
     setScrollUp(true);
   }, []);
 
-  return <InHomePage />
+  // return <InHomePage />
 
   return (
     <animated.div style={scrollUpProps}>
@@ -99,7 +99,7 @@ export default function Home() {
         </button>
         <table className="mt-8">
           <tbody>
-            <tr>
+            {/* <tr>
               <td className="border-r-2	border-white pr-4 text-right relative py-6">
                 <div
                   className="bg-white w-4 h-4 absolute rotate-45"
@@ -113,7 +113,7 @@ export default function Home() {
                 </p>
               </td>
               <td />
-            </tr>
+            </tr> */}
             <tr>
               <td />
               <td className="border-l-2	border-white pl-4 relative py-6">
