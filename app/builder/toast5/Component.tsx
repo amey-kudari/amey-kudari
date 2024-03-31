@@ -81,7 +81,7 @@ const ComponenetWithoutToast = () => {
         ref={usageDivRef}
       >
         <h2 className="text-3xl mb-2 mt-8">
-          As easy at gets (1..2..3!) while and as barebone as possible.
+          As easy at gets (1..2..3!) while being as barebone as possible.
         </h2>
         <h3 className="text-2xl mt-2">
           <span className="text-4xl">1.</span> Install the package through npm
