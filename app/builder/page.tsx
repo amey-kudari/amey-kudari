@@ -122,7 +122,7 @@ const Page = () => {
           </p>
         </button>
 
-        <button
+        {/* <button
           className="py-4 px-6 border-zinc-400 rounded-lg m-6 border-2 hover:bg-zinc-800 group"
           onClick={() => setRedirectUrl("/builder/sponsors")}
         >
@@ -134,7 +134,7 @@ const Page = () => {
           <p className="text-zinc-500 group-hover:text-white">
             List last updated : 18-Mar-24
           </p>
-        </button>
+        </button> */}
       </div>
     </animated.div>
   );

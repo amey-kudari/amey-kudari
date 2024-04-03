@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import data from "./data.json";
 
@@ -19,7 +17,7 @@ const Page = () => {
                 href={`https://h1bgrader.com${company.employer_url}`}
                 className="flex-1 pl-6"
               >
-                {company.employer_name}{" "}
+                {company.employer_name}
                 <small>
                   <strong>({company.count})</strong>
                 </small>
