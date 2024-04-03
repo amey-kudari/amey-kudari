@@ -121,7 +121,8 @@ export default function Home() {
                   className="bg-white w-4 h-4 absolute rotate-45"
                   style={{ left: "-0.55rem", top: "3rem" }}
                 />
-                <h1 className="text-xl text-slate-300">2022 Jun - 2024 Jan</h1>
+                <h1 className="text-xl text-slate-300">2022 Jun - </h1>
+                {/* <h1 className="text-xl text-slate-300">2022 Jun - 2024 Jan</h1> */}
                 <h1 className="text-lg font-semibold">Sprinklr</h1>
                 <p className="text-slate-100">Frontend Software Developer</p>
               </td>
