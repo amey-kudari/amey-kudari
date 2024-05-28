@@ -3,7 +3,6 @@ import Select from "react-select";
 import { USA } from "../constants/usa";
 import { INDIA } from "../constants/india";
 import { useEffect } from "react";
-// import "./page-ticker.css";
 
 export const TickerSelectBox = ({
   value,
