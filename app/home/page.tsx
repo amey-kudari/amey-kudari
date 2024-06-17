@@ -95,7 +95,7 @@ export default function Home() {
           className="text-sm mb-2 text-cyan-500 hover:underline"
           onClick={scrollToBottom}
         >
-          Headlines only, Ping for details!
+          Headings only, Ping for details!
         </button>
         <table className="mt-8">
           <tbody>
@@ -115,14 +115,27 @@ export default function Home() {
               <td />
             </tr> */}
             <tr>
+              <td className="border-r-2	border-white pr-4 text-right relative py-6">
+                <div
+                  className="bg-white w-4 h-4 absolute rotate-45"
+                  style={{ right: "-0.55rem", top: "3rem" }}
+                />
+                <h1 className="text-xl text-slate-300">2024 Jan - 2024 Dec</h1>
+                <h1 className="text-lg font-semibold">MSCS at ASU</h1>
+                <p className="text-slate-100">Arizona State University, Tempe AZ - USA</p>
+              </td>
+              <td />
+            </tr>
+
+            <tr>
               <td />
               <td className="border-l-2	border-white pl-4 relative py-6">
                 <div
                   className="bg-white w-4 h-4 absolute rotate-45"
                   style={{ left: "-0.55rem", top: "3rem" }}
                 />
-                <h1 className="text-xl text-slate-300">2022 Jun - </h1>
-                {/* <h1 className="text-xl text-slate-300">2022 Jun - 2024 Jan</h1> */}
+                {/* <h1 className="text-xl text-slate-300">2022 Jun - </h1> */}
+                <h1 className="text-xl text-slate-300">2022 Jun - 2024 Jan</h1>
                 <h1 className="text-lg font-semibold">Sprinklr</h1>
                 <p className="text-slate-100">Frontend Software Developer</p>
               </td>
@@ -251,9 +264,9 @@ export default function Home() {
                   className="bg-white w-4 h-4 absolute rotate-45"
                   style={{ right: "-0.55rem", top: "3rem" }}
                 />
-                <h1 className="text-xl text-slate-300">2018 July</h1>
+                <h1 className="text-xl text-slate-300">2018 July - 2022 May</h1>
                 <h1 className="text-lg font-semibold">
-                  Started Btech - CSE at IIIT-H
+                  Btech - CSE at IIIT-H
                 </h1>
                 <p className="text-slate-300">
                   International Institute of Information Technology - Hyd <br />
