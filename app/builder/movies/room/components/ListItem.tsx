@@ -82,11 +82,11 @@ export const ListItem = ({
   };
 
   return (
-    <li key={movie.name} className="">
+    <li key={movie.name} className="mb-1.5">
       <button
         className={`w-full p-2 rounded-lg ${
           movie.name === selectedMovie
-            ? "bg-slate-600 mt-2 cursor-default"
+            ? "bg-slate-600 cursor-default"
             : "bg-slate-500 hover:bg-slate-700"
         }`}
         onClick={() => setSelectedMovie(movie.name)}
