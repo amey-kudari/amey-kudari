@@ -25,14 +25,14 @@ function FPSGame() {
       setCrosshair((previous) => ({
         x: Math.min(
           Math.max(
-            previous.x - 100 * (e.movementX / window.screen.width),
+            previous.x - 100 * (e.movementX / (window?.screen?.width ?? 2000)),
             -100
           ),
           100
         ),
         y: Math.min(
           Math.max(
-            previous.y - 100 * (e.movementY / window.screen.height),
+            previous.y - 100 * (e.movementY / (window?.screen?.height ?? 1100)),
             -100
           ),
           100
