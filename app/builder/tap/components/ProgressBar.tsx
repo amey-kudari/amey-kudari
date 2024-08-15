@@ -1,3 +1,4 @@
+"use client";
 import { memo, useEffect, useLayoutEffect, useState } from "react";
 
 const ProgressBar = ({ time, resetAt }: { time: number, resetAt : number }) => {
