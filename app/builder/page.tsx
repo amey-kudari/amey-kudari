@@ -33,6 +33,19 @@ const Page = () => {
       >
         <button
           className="py-4 px-6 border-zinc-400 rounded-lg m-6 border-2 hover:bg-zinc-800 group"
+          onClick={() => setRedirectUrl("/builder/tap")}
+        >
+          <h1 className="text-4xl mb-2">Tap</h1>
+          <p className="text-zinc-500 group-hover:text-white">
+            Tells you your reaction time.
+          </p>
+          <p className="text-zinc-500 group-hover:text-white">
+            How quickly can you click after seeing something on screen? Helps with fps and flash sales!
+          </p>
+        </button>
+
+        <button
+          className="py-4 px-6 border-zinc-400 rounded-lg m-6 border-2 hover:bg-zinc-800 group"
           onClick={() => setRedirectUrl("/builder/toast5")}
         >
           <h1 className="text-4xl mb-2">Toast5</h1>
