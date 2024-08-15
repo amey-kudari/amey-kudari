@@ -1,4 +1,5 @@
 "use client";
+import "raf/polyfill";
 import React, { useState } from "react";
 import { useSpring, animated } from "@react-spring/web";
 import { useDrag } from "@use-gesture/react";

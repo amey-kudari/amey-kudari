@@ -1,5 +1,8 @@
 "use client";
-import { memo, useEffect, useLayoutEffect, useState } from "react";
+import { memo, useLayoutEffect, useState } from "react";
+// const raf = require('raf');
+import raf from "raf";
+raf.polyfill();
 
 const ProgressBar = ({ time, resetAt }: { time: number, resetAt : number }) => {
   const [width, setWidth] = useState("100%");  
@@ -15,7 +18,7 @@ const ProgressBar = ({ time, resetAt }: { time: number, resetAt : number }) => {
    } else setWidth("0%");
   };
  
-  requestAnimationFrame(function () {
+  requestAnimationFrame?.(function () {
     console.log("before repaint", {removeTransition, width});
     channel.port2.postMessage(undefined);
   });
