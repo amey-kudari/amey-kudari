@@ -199,7 +199,7 @@ export default function Page() {
         </p>
       </div>
 
-      <h1 className="text-4xl text-center mt-10">Progress bar in action</h1>
+      {/* <h1 className="text-4xl text-center mt-10">Progress bar in action</h1>
       <div className="w-full p-4 sm:w-1/2 mt-2 text-xl font-light bg-slate-900 rounded-md">
         <div className="flex justify-center items-center">
           <ProgressBar time={5} resetAt={resetAt} />
@@ -233,7 +233,7 @@ export default function Page() {
             </li>
           </ol>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
