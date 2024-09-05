@@ -14,7 +14,7 @@ export default function Page() {
         1. Reset Animations in react
       </Link>
       <Link
-        href="/builder/blog/animation-reset"
+        href="/builder/blog/js-primitives-for-c-users"
         className="underline text-blue-500"
       >
         2. Issue with Primitive Variables in Javascript, if you learnt C first.
