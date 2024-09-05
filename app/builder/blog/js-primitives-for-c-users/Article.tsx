@@ -135,7 +135,7 @@ function Page() {
         <p className="indent-5 mt-4">
           The biggest one was how C gives low level access to memory, allowing
           to access memory directly. We have variables and arrays, and strings
-          in C are pretty much arrays. That isnt the case with Javascript.
+          in C are pretty much arrays. That is not the case with Javascript.
           Javascript is more{" "}
           <strong className="text-red-500">Modern and Safe</strong>, and does
           not give you low level access to memory. This can make it confusing to
@@ -152,7 +152,7 @@ function Page() {
           </strong>{" "}
           (among number, bigint, boolean, null, undefined, symbol). You are
           allowed to assume all of the primitives are passed by value, and many
-          aritcles online state the same (
+          articles online state the same (
           <Link
             target="_blank"
             className="underline text-blue-500"
@@ -281,7 +281,7 @@ function Page() {
       <div className="w-full p-4 sm:w-1/2 mt-2 text-xl font-light bg-slate-900 rounded-md">
         <p className="indent-4 mb-4">
           The first codeblock should confirm, that the string is indeed passed
-          by value, or javascript figured out a 4th dimention of turing
+          by value, or javascript figured out a 4th dimension of Turing
           machines. The former turns out to be correct here,{" "}
           <strong className="text-red-500">
             strings are not copied on every function call, but not quite.
@@ -320,12 +320,12 @@ function Page() {
           functions.
         </p>
         <p className="indent-4 mt-4 mb-2">
-          Another caveat related the javascript strings (extends to bigint, and
+          Another caveat related to javascript strings (extends to bigint, and
           other primitives mentioned above), is that they can be compared. You
           can compare two strings or bigints or other primitives using the ===
-          or == opertors. Why is this important? to help you understand why the
+          or == operators. Why is this important? To help you understand why the
           react component below behaves the way it does. (This may seem obvious
-          to people who started with javascript, but this article is focussed on
+          to people who started with javascript, but this article is focused on
           people who learnt C as their first language). Look at this other
           example below,
         </p>
@@ -356,7 +356,7 @@ function Page() {
           <li className="mb-2">
             Does that mean learning C makes it harder to learn Javascript? Nope.
             It helps you understand how javascript works. Once you learn what is
-            happening, you can be 100% sure on how your code will execute, and
+            happening, you can be 100% sure about how your code will execute, and
             the syntax helps you code a lot faster!
           </li>
           <li className="mb-2">
