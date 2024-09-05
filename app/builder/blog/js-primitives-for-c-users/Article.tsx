@@ -280,8 +280,7 @@ function Page() {
       </h1>
       <div className="w-full p-4 sm:w-1/2 mt-2 text-xl font-light bg-slate-900 rounded-md">
         <p className="indent-4 mb-4">
-          The first codeblock should confirm, that the string is indeed passed
-          by value, or javascript figured out a 4th dimension of Turing
+          The first codeblock should confirm, that the string is indeed not copied on every function call, or javascript figured out a 4th dimension of Turing
           machines. The former turns out to be correct here,{" "}
           <strong className="text-red-500">
             strings are not copied on every function call, but not quite.
