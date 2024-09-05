@@ -134,7 +134,7 @@ function Page() {
         </p>
         <p className="indent-5 mt-4">
           The biggest one was how C gives low level access to memory, allowing
-          to access memory directly. We have variables and arrays, and strings
+          to access memory directly. The arrays and strings
           in C are pretty much arrays. That is not the case with Javascript.
           Javascript is more{" "}
           <strong className="text-red-500">Modern and Safe</strong>, and does
