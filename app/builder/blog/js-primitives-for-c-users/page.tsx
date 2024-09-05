@@ -86,7 +86,7 @@ const Component = memo(() => {
 
   useEffect(() => {
     addToast({ message: `Rerendered at ${new Date().toLocaleTimeString()}` });
-  }, [str, srr]);
+  }, [str, srr, addToast]);
 
   return (
     <div>
@@ -110,6 +110,7 @@ const Component = memo(() => {
     </div>
   );
 });
+Component.displayName = "Component";
 
 function Page() {
   const [resetAt, setResetAt] = useState(Date.now());
