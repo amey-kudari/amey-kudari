@@ -10,23 +10,30 @@ export default function Home() {
   const router = useRouter();
 
   const contactRef = useRef<HTMLDivElement>(null);
+  // const [page, setPage] = useState("/builder");
   const scrollToBottom = (): void => {
     contactRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const [scrollUp, setScrollUp] = useState(false);
+  const [scrollUp, setScrollUp] = useState({
+    scrollUp: false,
+    page: "",
+  });
   const scrollUpProps = useSpring({
-    transform: `translateX(${scrollUp ? "-100%" : "0%"})`,
+    transform: `translateX(${scrollUp.scrollUp ? "-100%" : "0%"})`,
     config: { stiffness: 300, damping: 50, duration: 200 },
     onRest: () => {
-      if (scrollUp) {
-        router.push("/builder");
+      if (scrollUp.scrollUp) {
+        router.push(scrollUp.page);
       }
     },
   });
 
-  const onViewExamples = useCallback(() => {
-    setScrollUp(true);
+  const onViewExamples = useCallback((page = "/builder") => {
+    setScrollUp({
+      scrollUp: true,
+      page,
+    });
   }, []);
 
   // return <InHomePage />
@@ -85,7 +92,18 @@ export default function Home() {
             </li>
           </ul>
           <div className="flex justify-start items-start w-full mt-4">
-            <button className="flex items-center gap-4 py-2 px-4 border border-zinc-400 rounded-md hover:bg-zinc-800" onClick={onViewExamples}>Fun Stuff! <FaArrowRight /></button>
+            <button
+              className="flex items-center gap-4 py-2 px-4 border border-zinc-400 rounded-md hover:bg-zinc-800 mr-2"
+              onClick={() => onViewExamples()}
+            >
+              Projects <FaArrowRight />
+            </button>
+            <button
+              className="flex items-center gap-4 py-2 px-4 border border-zinc-400 rounded-md hover:bg-zinc-800"
+              onClick={() => onViewExamples("/builder/blog")}
+            >
+              Blog <FaArrowRight />
+            </button>
           </div>
         </div>
       </div>
@@ -122,7 +140,9 @@ export default function Home() {
                 />
                 <h1 className="text-xl text-slate-300">2024 Jan - 2024 Dec</h1>
                 <h1 className="text-lg font-semibold">MSCS at ASU</h1>
-                <p className="text-slate-100">Arizona State University, Tempe AZ - USA</p>
+                <p className="text-slate-100">
+                  Arizona State University, Tempe AZ - USA
+                </p>
               </td>
               <td />
             </tr>
@@ -265,9 +285,7 @@ export default function Home() {
                   style={{ right: "-0.55rem", top: "3rem" }}
                 />
                 <h1 className="text-xl text-slate-300">2018 July - 2022 May</h1>
-                <h1 className="text-lg font-semibold">
-                  Btech - CSE at IIIT-H
-                </h1>
+                <h1 className="text-lg font-semibold">Btech - CSE at IIIT-H</h1>
                 <p className="text-slate-300">
                   International Institute of Information Technology - Hyd <br />
                   <a
