@@ -3,10 +3,12 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useTimer } from "./hooks/useTimer";
 import { ProgressBar } from "./components/ProgressBar";
+import { Triangle } from "react-loader-spinner";
 
 function FPSGame() {
   const gameTimeout = useRef<number>();
 
+  const [backgroundLoading, setBGLoading] = useState(true);
   const [green, setGreen] = useState({ isGreen: false, greenAt: 0 });
   const [isLocked, setIsLocked] = useState(false);
   const [reactionTime, setReactionTime] = useState(10000000);
@@ -44,6 +46,7 @@ function FPSGame() {
 
   const handleClick = useCallback(
     (e: any) => {
+      if(backgroundLoading) return;
       if (!isLocked) {
         document.body.requestPointerLock();
         // resetTimer(10);
@@ -65,7 +68,8 @@ function FPSGame() {
         }
       }
     },
-    [crosshair, isLocked, resetTimer]
+    [crosshair, isLocked, resetTimer, backgroundLoading]
+    // [crosshair, isLocked, resetTimer]
   );
 
   const handlePointerLockChange = useCallback(() => {
@@ -114,7 +118,6 @@ function FPSGame() {
         cursor: "none", // Hide the default cursor
       }}
     >
-      asdf
       <div
         className="absolute"
         style={{
@@ -124,7 +127,14 @@ function FPSGame() {
           left: `${-100 + crosshair.x}%`,
         }}
       >
-        <Image src="/dark-4k.jpg" alt="background could not load" fill />
+        <Image
+          src="/dark-4k.jpg"
+          alt="background could not load"
+          fill
+          onLoadingComplete={() => {
+            setBGLoading(false);
+          }}
+        />
       </div>
       {isLocked ? (
         <>
@@ -188,7 +198,16 @@ function FPSGame() {
             +
           </span>
         ) : (
-          <h1>Click anywhere on the screen to begin</h1>
+          <>
+            {backgroundLoading ? (
+              <div>
+                <Triangle height="80" width="80" color="#eee" />
+                <h1>Loading...</h1>
+              </div>
+            ) : (
+              <h1>Click anywhere on the screen to begin</h1>
+            )}
+          </>
         )}
       </div>
     </div>
