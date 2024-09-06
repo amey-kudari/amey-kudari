@@ -65,10 +65,18 @@ function FPSGame() {
           reactionTime === 10000000
         ) {
           setReactionTime(Date.now() - green.greenAt);
+        } else if(reactionTime < 10000000){
+          setGreen({
+            isGreen: false,
+            greenAt: 0,
+          });
+          setReactionTime(10000000);
+  
+          setProgressResetAt(Date.now());            
         }
       }
     },
-    [crosshair, isLocked, resetTimer, backgroundLoading]
+    [crosshair, isLocked, resetTimer, backgroundLoading, green, reactionTime]
     // [crosshair, isLocked, resetTimer]
   );
 
@@ -131,7 +139,7 @@ function FPSGame() {
           src="/dark-4k.jpg"
           alt="background could not load"
           fill
-          onLoadingComplete={() => {
+          onLoad={() => {
             setBGLoading(false);
           }}
         />
@@ -167,13 +175,12 @@ function FPSGame() {
           )}
         </>
       ) : null}
-      {isLocked ? (
+      {isLocked && reactionTime === 10000000 ? (
         <div
           className="flex flex-col items-center justify-center absolute w-full"
           style={{ zIndex: 1000 }}
         >
           <h1>Tap bubble when green. (turns green before below bar ends)</h1>
-          {/* <span>{String(timer)}</span> */}
           <ProgressBar time={11} resetAt={progressResetAt} />
         </div>
       ) : null}
