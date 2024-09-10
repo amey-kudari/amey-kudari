@@ -23,7 +23,7 @@ export default function Page() {
         href="/builder/blog/hack-with-html"
         className="underline text-blue-500"
       >
-        3. Hack NASA with HTML? Porbably possible!
+        3. Hack NASA with HTML? Probably possible!
       </Link>
       </div>
       {/* <Link
