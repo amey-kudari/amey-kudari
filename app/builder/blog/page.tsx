@@ -19,6 +19,12 @@ export default function Page() {
       >
         2. Issue with Primitive Variables in Javascript, if you learnt C first.
       </Link>
+      <Link
+        href="/builder/blog/hack-with-html"
+        className="underline text-blue-500"
+      >
+        3. Hack NASA with HTML? Porbably possible!
+      </Link>
       </div>
       {/* <Link
         href="/builder/blog/"
