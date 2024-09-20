@@ -33,6 +33,21 @@ const Page = () => {
       >
         <button
           className="py-4 px-6 border-zinc-400 rounded-lg m-6 border-2 hover:bg-zinc-800 group"
+          onClick={() =>
+            window.open("https://itest-prep.vercel.app/", "_blank")
+          }
+        >
+          <h1 className="text-4xl mb-2">ITest-Prep</h1>
+          <p className="text-zinc-500 group-hover:text-white">
+            AI powered Test based learning tool
+          </p>
+          <p className="text-zinc-500 group-hover:text-white">
+            Incomplete, work in progress. Code is not currently public.
+          </p>
+        </button>
+
+        <button
+          className="py-4 px-6 border-zinc-400 rounded-lg m-6 border-2 hover:bg-zinc-800 group"
           onClick={() => setRedirectUrl("/builder/tap")}
         >
           <h1 className="text-4xl mb-2">Tap</h1>
@@ -40,7 +55,8 @@ const Page = () => {
             Tells you your reaction time.
           </p>
           <p className="text-zinc-500 group-hover:text-white">
-            How quickly can you click after seeing something on screen? Helps with fps and flash sales!
+            How quickly can you click after seeing something on screen? Helps
+            with fps and flash sales!
           </p>
         </button>
 
@@ -87,17 +103,16 @@ const Page = () => {
         </button>
 
         <button
-          className="py-4 px-6 border-zinc-400 rounded-lg m-6 border-2 hover:black group"
-          disabled
+          className="py-4 px-6 border-zinc-400 rounded-lg m-6 border-2 hover:bg-zinc-800 group"
+          onClick={() => setRedirectUrl("/builder/blog")}
         >
-          <h1 className="text-4xl mb-2">My Engineering Policy</h1>
+          <h1 className="text-4xl mb-2">BLOG</h1>
           <p className="text-zinc-500">
-            A small idea about what I feel is important, and how software that
-            dont use them tend to be hated :P
+            Articles about frontend topics I have learnt in my career.
           </p>
-          <p className="text-zinc-500 group-hover:text-white">
-            NOTE: Taken down temporarily
-          </p>
+          {/* <p className="text-zinc-500 group-hover:text-white"> */}
+          {/* NOTE: Taken down temporarily */}
+          {/* </p> */}
         </button>
 
         <button
