@@ -5,6 +5,7 @@ import { FaArrowRight } from "react-icons/fa";
 import { useSpring, animated } from "@react-spring/web";
 import { useRouter } from "next/navigation";
 import InHomePage from "../in/page";
+import Link from "next/link";
 
 export default function Home() {
   const router = useRouter();
@@ -40,8 +41,45 @@ export default function Home() {
 
   return (
     <animated.div style={scrollUpProps}>
-      <div className="min-h-screen w-full grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <div className="min-h-screen flex justify-center items-center flex-col gap-2 px-2 py-4">
+      <div className="min-h-screen w-full gap-4 radial-dark flex flex-col items-center justify-center px-5">
+        <div>
+
+        <h1 className="text-6xl font-semibold text-red-400 sm:text-7xl hover:text-red-400 mb-2">
+          I build websites
+        </h1>
+        <h1 className="text-6xl font-semibold text-blue-300 sm:text-7xl mb-2">
+          You Envision them
+        </h1>
+        <h1 className="text-6xl font-semibold text-green-300 sm:text-7xl">
+          I will build them
+        </h1>
+
+        <div className="flex justify-start items-start w-full mt-4 flex-wrap">
+          <Link href="">
+            <button
+              className="flex items-center gap-4 py-2 px-4 border border-zinc-400 rounded-md hover:bg-zinc-800 mr-2 mt-1"
+              // onClick={() => onViewExamples()}
+            >
+              iTest-Prep <FaArrowRight />
+          </button>
+          </Link>
+          <button
+            className="flex items-center gap-4 py-2 px-4 border border-zinc-400 rounded-md hover:bg-zinc-800 mr-2 mt-1"
+            onClick={() => onViewExamples()}
+            >
+            Projects <FaArrowRight />
+          </button>
+          <button
+            className="flex items-center gap-4 py-2 px-4 border border-zinc-400 rounded-md hover:bg-zinc-800 mt-1"
+            onClick={() => onViewExamples("/builder/blog")}
+            >
+            Blog <FaArrowRight />
+          </button>
+        </div>
+      </div>
+
+
+        {/* <div className="min-h-screen flex justify-center items-center flex-col gap-2 px-2 py-4">
           <Image
             src="/amey-dp.jpg"
             width={300}
@@ -50,32 +88,26 @@ export default function Home() {
             className="rounded-full opacity-50 hover:opacity-75"
           />
           <div className="mt-8">
-            <h1 className="text-6xl font-semibold text-red-300 sm:text-7xl hover:text-red-400">
+            <h1 className="text-6xl font-semibold text-red-400 sm:text-7xl hover:text-red-400">
               Build
             </h1>
             <h1 className="text-6xl font-semibold text-blue-200 sm:text-7xl">
-              Automate
+              Enhance
             </h1>
             <h1 className="text-6xl font-semibold text-green-200 sm:text-7xl">
-              Predict
+              Automate
             </h1>
           </div>
-          <h2>Almost anything!</h2>
+          <h2>anything!</h2>
         </div>
         <div className="min-h-screen flex justify-center items-center flex-col gap-2 p-4">
           <ul>
             <li className="text-lg">
-              <span className="text-3xl font-semibold text-red-300">Build</span>{" "}
-              anything from a simple website for a coffee shop to a full fledged
-              end to end trucking system. Ive done both of these! <br />
-              <b>Andriod, IOS, windows, macos and webapps!</b> <br />
-              Tech Stack? Server? Hosting? Ping me, I can get you what you want
-              at the best server, domain and development prices you would not
-              have imagined! <br />
+              <span className="text-3xl font-semibold text-red-400">Build</span> websites, mobile applications, desktop applicaitons.
             </li>
             <li className="text-lg mt-4">
               <span className="text-3xl font-semibold text-blue-200">
-                Automate
+                Enhance
               </span>{" "}
               your stock monitoring, or any website you read things from, or
               anything you do on your computer that you feel is repetative. I
@@ -105,7 +137,7 @@ export default function Home() {
               Blog <FaArrowRight />
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="min-h-screen flex justify-center flex-col items-center p-1">
         <h1 className="text-6xl text-slate-100"> Timeline! </h1>

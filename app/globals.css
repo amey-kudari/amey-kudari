@@ -59,3 +59,7 @@ body, html{
 ::-webkit-scrollbar-thumb:hover {
   background: #999; 
 }
+
+.radial-dark {
+  background: radial-gradient(#0e0e19, #000000);
+}
