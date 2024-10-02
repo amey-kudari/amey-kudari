@@ -63,6 +63,8 @@ export default function Page() {
             onClick={() => {
               if (Number(key) === target && game === "running") {
                 click();
+              } else {
+                setScore(prev => Math.max(prev - 2, 0));
               }
             }}
             className={`w-24 h-24 ${
