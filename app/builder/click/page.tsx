@@ -2,9 +2,6 @@
 import { useEffect, useState } from "react";
 
 export default function Page() {
-  const [buttons, setButtons] = useState(() =>
-    Object.fromEntries(new Array(9).fill(false).map((v, i) => [i, v]))
-  );
   const [game, setGame] = useState<"none" | "done" | "running">("none");
   const [timer, setTimer] = useState(20);
   const [score, setScore] = useState(0);
@@ -29,15 +26,16 @@ export default function Page() {
   }, [timer, game]);
 
   const newRandom = () => {
-    let nr = Math.floor(Math.random() * 9);
-    while(nr === target){
-      nr = Math.floor(Math.random() * 9);
-    }
-    return nr;
-  }
+    const rem = new Array(9)
+      .fill(false)
+      .map((_, i) => i)
+      .filter((key) => Number(key) !== target);
+    return Number(rem[Math.floor(Math.random() * 8)]);
+  };
+
   const click = () => {
     setScore((prev) => prev + 1);
-    setTarget(Math.floor(Math.random() * 9));
+    setTarget(newRandom());
   };
 
   return (
@@ -64,14 +62,14 @@ export default function Page() {
       ) : null}
 
       <div className="grid grid-cols-3 gap-4">
-        {Object.keys(buttons).map((key) => (
+        {new Array(9).fill(false).map((_, key) => (
           <button
             key={key}
             onClick={() => {
               if (Number(key) === target && game === "running") {
                 click();
               } else {
-                setScore(prev => Math.max(prev - 2, 0));
+                setScore((prev) => Math.max(prev - 2, 0));
               }
             }}
             className={`w-24 h-24 ${
