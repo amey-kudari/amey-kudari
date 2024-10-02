@@ -28,6 +28,13 @@ export default function Page() {
     }
   }, [timer, game]);
 
+  const newRandom = () => {
+    let nr = Math.floor(Math.random() * 9);
+    while(nr === target){
+      nr = Math.floor(Math.random() * 9);
+    }
+    return nr;
+  }
   const click = () => {
     setScore((prev) => prev + 1);
     setTarget(Math.floor(Math.random() * 9));
