@@ -73,7 +73,7 @@ export default function Page() {
           ></button>
         ))}
       </div>
-      {game === "done" ? (
+      {game !== "none" ? (
         <h2 className="mt-2 text-3xl">SCORE : {score}</h2>
       ) : null}
     </div>
