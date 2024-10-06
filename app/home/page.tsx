@@ -55,7 +55,7 @@ export default function Home() {
         </h1>
 
         <div className="flex justify-start items-start w-full mt-4 flex-wrap">
-          <Link href="">
+          <Link href="https://itest-prep.vercel.app/" target="_blank">
             <button
               className="flex items-center gap-4 py-2 px-4 border border-zinc-400 rounded-md hover:bg-zinc-800 mr-2 mt-1"
               // onClick={() => onViewExamples()}
