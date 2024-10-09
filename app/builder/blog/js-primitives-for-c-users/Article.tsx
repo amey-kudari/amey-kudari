@@ -68,7 +68,7 @@ const Component = () => {
                 Change String
             </button>
             <button className={buttonClass} onClick={() => setSrr("String".split(""))}>
-                Change Char Array
+                Change Char Array (treated as string array by js)
             </button>
             <p>
               Changing Char array (treated as string array by js) rerenders the component, but changing the string does not.
@@ -101,10 +101,10 @@ const Component = memo(() => {
         className={buttonStyle}
         onClick={() => setSrr("String".split(""))}
       >
-        Change Char Array
+        Change Char Array (treated as string array by js)
       </button>
       <p>
-        Changing Char array rerenders the component, but changing the string
+        Changing Char array (treated as string array by js) rerenders the component, but changing the string
         does not.
       </p>
     </div>

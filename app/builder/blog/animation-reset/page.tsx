@@ -190,7 +190,7 @@ export default function Page() {
           <strong className="font-mono font-bold">
             channel.port1.onmessage
           </strong>{" "}
-          will run after a paint step.
+          will update the width after a paint step adding the transition back run after a paint step.
         </p>
         <p>
           This allows us to add the transition animation back to the component
