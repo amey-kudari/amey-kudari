@@ -134,9 +134,8 @@ function Page() {
         </p>
         <p className="indent-5 mt-4">
           The biggest one was how C gives low level access to memory, allowing
-          to access memory directly. The arrays and strings
-          in C are pretty much arrays. That is not the case with Javascript.
-          Javascript is more{" "}
+          to access memory directly. The arrays and strings in C are pretty much
+          arrays. That is not the case with Javascript. Javascript is more{" "}
           <strong className="text-red-500">Modern and Safe</strong>, and does
           not give you low level access to memory. This can make it confusing to
           understand strings for people who are coming from C. For example, we
@@ -280,8 +279,9 @@ function Page() {
       </h1>
       <div className="w-full p-4 sm:w-1/2 mt-2 text-xl font-light bg-slate-900 rounded-md">
         <p className="indent-4 mb-4">
-          The first codeblock should confirm, that the string is indeed not copied on every function call, or javascript figured out a 4th dimension of Turing
-          machines. The former turns out to be correct here,{" "}
+          The first codeblock should confirm, that the string is indeed not
+          copied on every function call, or javascript figured out a 4th
+          dimension of Turing machines. The former turns out to be correct here,{" "}
           <strong className="text-red-500">
             strings are not copied on every function call, but not quite.
           </strong>{" "}
@@ -307,8 +307,12 @@ function Page() {
           strings are passed by value. However, the strings passed as parameters
           are treated as immutable. You can modify the string parameter within
           the function (not recommended, bad practice), and only in such a case,
-          a copy of the string is created. This is implicit, similar to how the{" "}
-          <strong>this</strong> keyword is implicitly created and returned in{" "}
+          a copy of the string is created (NOTE: This is an optimization most
+          javascript engines make. But it is always valid to take javascript
+          strings as primitives which are always passed by value). This is
+          implicit, somewhat similar (not in functionality, just in being
+          implicit) to how the <strong>this</strong> keyword is implicitly
+          created and returned in{" "}
           <Link
             target="_blank"
             href="https://www.w3schools.com/js/js_object_constructors.asp"
@@ -355,8 +359,8 @@ function Page() {
           <li className="mb-2">
             Does that mean learning C makes it harder to learn Javascript? Nope.
             It helps you understand how javascript works. Once you learn what is
-            happening, you can be 100% sure about how your code will execute, and
-            the syntax helps you code a lot faster!
+            happening, you can be 100% sure about how your code will execute,
+            and the syntax helps you code a lot faster!
           </li>
           <li className="mb-2">
             Are there other concepts in javascript that are abstract, and
