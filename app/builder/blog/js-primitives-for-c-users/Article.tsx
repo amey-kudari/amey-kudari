@@ -62,7 +62,7 @@ const Component = () => {
         <div>
             <div>
                 <h4>String value: {JSON.stringify(str)}</h4>
-                <h4>Char Array value: {JSON.stringify(srr)}</h4>
+                <h4>Char Array (treated as string array by js) value: {JSON.stringify(srr)}</h4>
             </div>
             <button className={buttonClass} onClick={() => setStr("String")}>
                 Change String
@@ -71,7 +71,7 @@ const Component = () => {
                 Change Char Array
             </button>
             <p>
-              Changing Char array rerenders the component, but changing the string does not.
+              Changing Char array (treated as string array by js) rerenders the component, but changing the string does not.
             </p>
           </div>
       );
