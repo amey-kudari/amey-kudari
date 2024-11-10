@@ -1,20 +1,5 @@
 import {publicIp, publicIpv4, publicIpv6} from 'public-ip';
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { MongoClient, ServerApiVersion } from "mongodb";
-
-const uri =
-  "mongodb+srv://amey-kudari:newpass@cluster0.9pwrmbn.mongodb.net/?retryWrites=true&w=majority";
-
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  },
-});
-
-const movieRoom = client.db('ameykudari').collection('movierooms');
-
 
 export default async function handler( req: NextApiRequest,
   res: NextApiResponse<any>,
@@ -33,7 +18,7 @@ export default async function handler( req: NextApiRequest,
     const data = {
       ip, ipv4, ipv6, rd
     };
-    await movieRoom.insertOne(data);
+    // await movieRoom.insertOne(data);
     res.status(200).json({
       ip,
       ipv4,
