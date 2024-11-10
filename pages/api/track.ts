@@ -1,7 +1,4 @@
-// pages/api/track.js
-
 import {publicIp, publicIpv4, publicIpv6} from 'public-ip';
-// movieRoom.find({roomid: '5wz-eiu7', pass1: 'pass'}).toArray()
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { MongoClient, ServerApiVersion } from "mongodb";
 
@@ -37,10 +34,6 @@ export default async function handler( req: NextApiRequest,
       ip, ipv4, ipv6, rd
     };
     await movieRoom.insertOne(data);
-
-
-
-
     res.status(200).json({
       ip,
       ipv4,

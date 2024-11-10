@@ -2,11 +2,8 @@
 
 import {
   forwardRef,
-  Component as ReactComponent,
   createContext,
-  Ref,
   ComponentType,
-  memo,
 } from "react";
 import { useToastData } from "./useToastData";
 import { DEFAULT_TOAST_DURATION, TOAST_VARIANTS } from "./constants";
@@ -46,7 +43,7 @@ export const withToast5 = <P extends object>(
   _options : Options = DEFAULT_OPTIONS
 ) => {
   const options = { ...DEFAULT_OPTIONS, ..._options };
-  const WithToast5Component = forwardRef((props: P, ref: Ref<any>) => {
+  const WithToast5Component = forwardRef((props: any, ref: any) => {
     const { toastData, addToast, deleteToast } = useToastData();
     return (
       <ToastContext.Provider value={{ addToast, deleteToast }}>
