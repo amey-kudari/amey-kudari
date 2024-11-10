@@ -13,7 +13,7 @@ const client = new MongoClient(uri, {
   },
 });
 
-const movieRoom = client.db('ameykudari').collection('keyval');
+const movieRoom = client.db('ameykudari').collection('movierooms');
 
 
 export default async function handler( req: NextApiRequest,
