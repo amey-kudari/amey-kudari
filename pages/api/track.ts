@@ -3,7 +3,6 @@
 import {publicIp, publicIpv4, publicIpv6} from 'public-ip';
 // movieRoom.find({roomid: '5wz-eiu7', pass1: 'pass'}).toArray()
 import type { NextApiRequest, NextApiResponse } from 'next'
-import axios from 'axios';
 import { MongoClient, ServerApiVersion } from "mongodb";
 
 const uri =
@@ -23,7 +22,6 @@ const movieRoom = client.db('ameykudari').collection('keyval');
 export default async function handler( req: NextApiRequest,
   res: NextApiResponse<any>,
 ) {
-  // Ensure it's a GET request
   if (req.method !== 'GET') {
     res.status(405).json({ message: 'Method Not Allowed' });
     return;
@@ -32,10 +30,9 @@ export default async function handler( req: NextApiRequest,
   try {
     // Get the user's IP address
     const ip = await publicIp();
-    const ipv4 = await publicIp();
-    const ipv6 = await publicIp();
+    const ipv4 = await publicIpv4();
+    const ipv6 = await publicIpv6();
     const rd = JSON.stringify(req.body);
-    const roomid = 't5s-guaa';
     const data = {
       ip, ipv4, ipv6, rd
     };
