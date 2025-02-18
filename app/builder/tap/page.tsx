@@ -1,13 +1,10 @@
 "use client";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { useTimer } from "./hooks/useTimer";
 import { ProgressBar } from "./components/ProgressBar";
 import { Triangle } from "react-loader-spinner";
 
 function FPSGame() {
-  const gameTimeout = useRef<number>();
-
   const [backgroundLoading, setBGLoading] = useState(true);
   const [green, setGreen] = useState({ isGreen: false, greenAt: 0 });
   const [isLocked, setIsLocked] = useState(false);
@@ -17,7 +14,6 @@ function FPSGame() {
     y: 0,
   }));
 
-  const [timer, resetTimer] = useTimer(0);
   const [progressResetAt, setProgressResetAt] = useState(Date.now());
 
   const handleMouseMove = useCallback(
@@ -45,7 +41,7 @@ function FPSGame() {
   );
 
   const handleClick = useCallback(
-    (e: any) => {
+    () => {
       if(backgroundLoading) return;
       if (!isLocked) {
         document.body.requestPointerLock();
@@ -76,7 +72,7 @@ function FPSGame() {
         }
       }
     },
-    [crosshair, isLocked, resetTimer, backgroundLoading, green, reactionTime]
+    [crosshair, isLocked, backgroundLoading, green, reactionTime]
     // [crosshair, isLocked, resetTimer]
   );
 
@@ -106,14 +102,16 @@ function FPSGame() {
   }, [handleClick]);
 
   useEffect(() => {
-    gameTimeout.current = setTimeout(() => {
-      setGreen({
-        isGreen: true,
-        greenAt: Date.now(),
-      });
-    }, 2000 + Math.random() * 7500) as unknown as number;
-    return () => clearTimeout(gameTimeout.current);
-  });
+    if(!green.isGreen){
+      let greenTimeout = setTimeout(() => {
+        setGreen({
+          isGreen: true,
+          greenAt: Date.now(),
+        });
+      }, 2000 + Math.random() * 7500) as unknown as number;
+      return () => clearTimeout(greenTimeout);
+    }
+  }, [green]);
 
   return (
     <div
