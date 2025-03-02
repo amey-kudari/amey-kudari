@@ -55,18 +55,20 @@ export const Cell = ({ config, cellId, isCell }: { config: boolean[][], cellId: 
     transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
   } : undefined;
 
-  const activeColor = isCell ? "bg-green-300" : "bg-blue-300  bg-opacity-70";
+  const activeColor = isCell ? "bg-green-300 bg-opacity-70" : "bg-blue-300  bg-opacity-70";
 
-  return <div className="flex flex-row justify-center items-center touch-none select-none" style={style} ref={setNodeRef} {...attributes} {...listeners} touch-action="none">
-    {config.map((row, rowId) => <div key={rowId} touch-action="none">
-      {row.map((val, colId) =>
-        <div
-          touch-action="none"
-          key={100 + rowId * 10 + colId}
-          className={`${val ? (activeColor) : "bg-opacity-0 border-transparent"} border relative`}
-          style={{ width: cellWidth, height: cellWidth }}>
+  return <div ref={setNodeRef} {...attributes} {...listeners} className="touch-none select-none flex flex-col">
+    <div className={`flex flex-row justify-center items-center touch-none select-none ${!isCell ? 'pb-16' : 'mb-0'}`} style={style} touch-action="none">
+      {config.map((row, rowId) => <div key={rowId} touch-action="none">
+        {row.map((val, colId) =>
+          <div
+            touch-action="none"
+            key={100 + rowId * 10 + colId}
+            className={`${val ? (activeColor) : "bg-opacity-0 border-transparent"} border relative`}
+            style={{ width: cellWidth, height: cellWidth }}>
 
-        </div>)}
-    </div>)}
+          </div>)}
+      </div>)}
+    </div>
   </div>
 }

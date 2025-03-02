@@ -16,7 +16,7 @@ export default function Page() {
   const [bestScore, setBestScore] = useState(-1);
   const [board, setBoard] = useState(BOARD_CONFIG);
   const [score, setScore] = useState(0);
-  const paint = ((cellConfig: boolean[][] | null, dropLoc: { row: number; col: number }): boolean => {
+  const paint = ((cellConfig: boolean[][] | null, dropLoc: { row: number; col: number }, update = true): boolean => {
     if (cellConfig === null) return false;
     const { row, col } = dropLoc;
 
@@ -60,7 +60,7 @@ export default function Page() {
       }
     })
 
-    setBoard(boardCopy);
+    if (update) setBoard(boardCopy);
     return true;
   })
   const [cellConfig1, setCellConfig1] = useState<boolean[][] | null>(null);
@@ -92,12 +92,31 @@ export default function Page() {
     }
   }, [cellConfig1, cellConfig2, cellConfig3])
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const savedScore = window.localStorage.getItem('blocksudoku_bestscore');
-      if (savedScore) {
-        setBestScore(Number(savedScore))
+  const isGameOver = useMemo(() => {
+    if (cellConfig1 || cellConfig2 || cellConfig3) {
+      // check if we can add it on the board
+      for (let i = 0; i < board.length; i++) {
+        for (let j = 0; j < board[i].length; j++) {
+          if (cellConfig1 && paint(cellConfig1, { row: i, col: j }, false)) {
+            return false;
+          }
+          if (cellConfig2 && paint(cellConfig2, { row: i, col: j }, false)) {
+            return false;
+          }
+          if (cellConfig3 && paint(cellConfig3, { row: i, col: j }, false)) {
+            return false;
+          }
+        }
       }
+      return true;
+    }
+    return false;
+  }, [cellConfig1, cellConfig2, cellConfig3]);
+
+  useEffect(() => {
+    const savedScore = window.localStorage.getItem('blocksudoku_bestscore');
+    if (savedScore) {
+      setBestScore(Number(savedScore))
     }
   }, [])
 
@@ -110,13 +129,15 @@ export default function Page() {
   return <div touch-action="none" className='py-2'>
     <h1 className='text-center text-3xl'>Max score so far {bestScore === -1 ? '-' : Math.max(bestScore, score)}</h1>
     <h2 className='text-center text-xl mb-2'>Current score: {score}</h2>
-    <DndContext onDragEnd={onDragEnd}>
-      <Board board={board} currentCells={currentCells} />
-      <div className='flex items-center w-full justify-center m-2 gap-2'>
-        {cellConfig1 ? <Cell config={cellConfig1} cellId={1} /> : null}
-        {cellConfig2 ? <Cell config={cellConfig2} cellId={2} /> : null}
-        {cellConfig3 ? <Cell config={cellConfig3} cellId={3} /> : null}
-      </div>
-    </DndContext>
+    {isGameOver ? <h1 className='text-center mt-4 text-3xl'>GAME OVER!!</h1> :
+      <DndContext onDragEnd={onDragEnd}>
+        <Board board={board} currentCells={currentCells} />
+        <div className='flex items-center w-full justify-center m-2 gap-2'>
+          {cellConfig1 ? <Cell config={cellConfig1} cellId={1} /> : null}
+          {cellConfig2 ? <Cell config={cellConfig2} cellId={2} /> : null}
+          {cellConfig3 ? <Cell config={cellConfig3} cellId={3} /> : null}
+        </div>
+      </DndContext>}
+    {score ? null : <p className='text-center'>You can grab pieces by holding under them for better visiblity</p>}
   </div>
 }
