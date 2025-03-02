@@ -76,7 +76,7 @@ export const Cell = ({
           ))}
         </div>
         {isCell ? null : (
-          <div className={`py-8 flex items-center justify-center`}>
+          <div className={`pt-16 py-4 flex items-center justify-center`}>
             <div
               className={`${
                 isDragging ? "bg-opacity-0" : "bg-white"
