@@ -13,9 +13,9 @@ const getRandomConfig = () => {
 }
 
 export default function Page() {
+  const [bestScore, setBestScore] = useState(-1);
   const [board, setBoard] = useState(BOARD_CONFIG);
-  const [round, setRound] = useState(0);
-  const pastCells = useRef([]);
+  const [score, setScore] = useState(0);
   const paint = ((cellConfig: boolean[][] | null, dropLoc: { row: number; col: number }): boolean => {
     if (cellConfig === null) return false;
     const { row, col } = dropLoc;
@@ -33,9 +33,34 @@ export default function Page() {
         }
       }
     }
-    // return false
+    const fullRows: number[] = []
+    const fullCols: number[] = []
+    for (let i = 0; i < boardCopy.length; i++) {
+      let isFull = true;
+      for (let j = 0; j < boardCopy[i].length; j++) {
+        isFull = isFull && boardCopy[i][j];
+      }
+      if (isFull) fullRows.push(i);
+    }
+    for (let j = 0; j < boardCopy[0].length; j++) {
+      let isFull = true;
+      for (let i = 0; i < boardCopy.length; i++) {
+        isFull = isFull && boardCopy[i][j];
+      }
+      if (isFull) fullCols.push(j);
+    }
+    fullRows.forEach(rowId => {
+      for (let j = 0; j < boardCopy[rowId].length; j++) {
+        boardCopy[rowId][j] = false;
+      }
+    })
+    fullCols.forEach(colId => {
+      for (let i = 0; i < boardCopy.length; i++) {
+        boardCopy[i][colId] = false;
+      }
+    })
+
     setBoard(boardCopy);
-    // console.log(cellConfig, dropLoc);
     return true;
   })
   const [cellConfig1, setCellConfig1] = useState<boolean[][] | null>(null);
@@ -54,20 +79,40 @@ export default function Page() {
       const cellId = Number(event.active.id.split('_')[1])
       if (paint(currentCells[cellId - 1], { row, col })) {
         currentCellConfigs[cellId - 1](null);
+        setScore(s => s + 1);
       }
-      console.log('EVENT', { row, col, cellId, aid: event.active.id });
     }
   }
 
   useEffect(() => {
-    setCellConfig1(getRandomConfig());
-    setCellConfig2(getRandomConfig());
-    setCellConfig3(getRandomConfig());
-  }, [round])
-  return <div touch-action="none">
-    <DndContext onDragEnd={onDragEnd} touch-action="none">
-      <Board board={board} currentCells={currentCells} touch-action="none" />
-      <div className='flex items-center w-full justify-center m-2 gap-2' touch-action="none">
+    if (!cellConfig1 && !cellConfig2 && !cellConfig3) {
+      setCellConfig1(getRandomConfig());
+      setCellConfig2(getRandomConfig());
+      setCellConfig3(getRandomConfig());
+    }
+  }, [cellConfig1, cellConfig2, cellConfig3])
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedScore = window.localStorage.getItem('blocksudoku_bestscore');
+      if (savedScore) {
+        setBestScore(Number(savedScore))
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    if (score > bestScore && bestScore > -1) {
+      window.localStorage.setItem('blocksudoku_bestscore', String(score));
+    }
+  }, [bestScore, score]);
+
+  return <div touch-action="none" className='py-2'>
+    <h1 className='text-center text-3xl'>Max score so far {bestScore === -1 ? '-' : Math.max(bestScore, score)}</h1>
+    <h2 className='text-center text-xl mb-2'>Current score: {score}</h2>
+    <DndContext onDragEnd={onDragEnd}>
+      <Board board={board} currentCells={currentCells} />
+      <div className='flex items-center w-full justify-center m-2 gap-2'>
         {cellConfig1 ? <Cell config={cellConfig1} cellId={1} /> : null}
         {cellConfig2 ? <Cell config={cellConfig2} cellId={2} /> : null}
         {cellConfig3 ? <Cell config={cellConfig3} cellId={3} /> : null}
