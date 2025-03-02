@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Board } from "./components/Board";
 import { Cell } from "./components/Cell";
 import { DndContext } from "@dnd-kit/core";
@@ -18,58 +24,59 @@ export default function Page() {
   const [bestScore, setBestScore] = useState(-1);
   const [board, setBoard] = useState(BOARD_CONFIG);
   const [score, setScore] = useState(0);
-  const paint = (
-    cellConfig: boolean[][] | null,
-    dropLoc: { row: number; col: number },
-    update = true
-  ): boolean => {
-    if (cellConfig === null) return false;
-    const { row, col } = dropLoc;
+  const paint = useCallback(
+    (
+      cellConfig: boolean[][] | null,
+      dropLoc: { row: number; col: number },
+      update = true
+    ): boolean => {
+      if (cellConfig === null) return false;
+      const { row, col } = dropLoc;
 
-    console.log({ row, col, cellConfig });
-
-    const boardCopy = board.map((row) => row.slice());
-    console.log(boardCopy);
-    for (let i = row; i < row + 3; i++) {
-      for (let j = col; j < col + 3; j++)
-        if (cellConfig[i - row][j - col]) {
-          if (i < 8 && j < 8 && boardCopy[i][j] === false) {
-            boardCopy[i][j] = true;
-          } else {
-            return false;
+      const boardCopy = board.map((row) => row.slice());
+      for (let i = row; i < row + 3; i++) {
+        for (let j = col; j < col + 3; j++)
+          if (cellConfig[i - row][j - col]) {
+            if (i < 8 && j < 8 && boardCopy[i][j] === false) {
+              boardCopy[i][j] = true;
+            } else {
+              return false;
+            }
           }
+      }
+      const fullRows: number[] = [];
+      const fullCols: number[] = [];
+      for (let i = 0; i < boardCopy.length; i++) {
+        let isFull = true;
+        for (let j = 0; j < boardCopy[i].length; j++) {
+          isFull = isFull && boardCopy[i][j];
         }
-    }
-    const fullRows: number[] = [];
-    const fullCols: number[] = [];
-    for (let i = 0; i < boardCopy.length; i++) {
-      let isFull = true;
-      for (let j = 0; j < boardCopy[i].length; j++) {
-        isFull = isFull && boardCopy[i][j];
+        if (isFull) fullRows.push(i);
       }
-      if (isFull) fullRows.push(i);
-    }
-    for (let j = 0; j < boardCopy[0].length; j++) {
-      let isFull = true;
-      for (let i = 0; i < boardCopy.length; i++) {
-        isFull = isFull && boardCopy[i][j];
+      for (let j = 0; j < boardCopy[0].length; j++) {
+        let isFull = true;
+        for (let i = 0; i < boardCopy.length; i++) {
+          isFull = isFull && boardCopy[i][j];
+        }
+        if (isFull) fullCols.push(j);
       }
-      if (isFull) fullCols.push(j);
-    }
-    fullRows.forEach((rowId) => {
-      for (let j = 0; j < boardCopy[rowId].length; j++) {
-        boardCopy[rowId][j] = false;
-      }
-    });
-    fullCols.forEach((colId) => {
-      for (let i = 0; i < boardCopy.length; i++) {
-        boardCopy[i][colId] = false;
-      }
-    });
+      fullRows.forEach((rowId) => {
+        for (let j = 0; j < boardCopy[rowId].length; j++) {
+          boardCopy[rowId][j] = false;
+        }
+      });
+      fullCols.forEach((colId) => {
+        for (let i = 0; i < boardCopy.length; i++) {
+          boardCopy[i][colId] = false;
+        }
+      });
 
-    if (update) setBoard(boardCopy);
-    return true;
-  };
+      if (update) setBoard(boardCopy);
+      return true;
+    },
+    [board]
+  );
+
   const [cellConfig1, setCellConfig1] = useState<boolean[][] | null>(null);
   const [cellConfig2, setCellConfig2] = useState<boolean[][] | null>(null);
   const [cellConfig3, setCellConfig3] = useState<boolean[][] | null>(null);
@@ -121,7 +128,7 @@ export default function Page() {
       return true;
     }
     return false;
-  }, [cellConfig1, cellConfig2, cellConfig3]);
+  }, [cellConfig1, cellConfig2, cellConfig3, board, paint]);
 
   useEffect(() => {
     const savedScore = window.localStorage.getItem("blocksudoku_bestscore");
@@ -131,7 +138,7 @@ export default function Page() {
   }, []);
 
   useEffect(() => {
-    if (score > bestScore && bestScore > -1) {
+    if (score > bestScore && score > 0) {
       window.localStorage.setItem("blocksudoku_bestscore", String(score));
     }
   }, [bestScore, score]);
@@ -139,24 +146,69 @@ export default function Page() {
   return (
     <div touch-action="none" className="py-2">
       <h1 className="text-center text-3xl">
-        Max score so far {bestScore === -1 ? "-" : Math.max(bestScore, score)}
+        {score > bestScore
+          ? `New high score: ${score}`
+          : `Max score so far ${bestScore === -1 ? "-" : bestScore}`}
       </h1>
       <h2 className="text-center text-xl mb-2">Current score: {score}</h2>
       {isGameOver ? (
-        <h1 className="text-center mt-4 text-3xl">GAME OVER!!</h1>
-      ) : (
-        <DndContext onDragEnd={onDragEnd}>
-          <Board board={board} currentCells={currentCells} />
-          <div className="flex items-center w-full justify-center m-2 gap-2">
-            {cellConfig1 ? <Cell config={cellConfig1} cellId={1} /> : null}
-            {cellConfig2 ? <Cell config={cellConfig2} cellId={2} /> : null}
-            {cellConfig3 ? <Cell config={cellConfig3} cellId={3} /> : null}
-          </div>
-        </DndContext>
-      )}
+        <div className="flex items-center flex-col">
+          <h1 className="text-center mt-4 text-3xl">GAME OVER!!</h1>
+          <button
+            className="bg-zinc-500 py-1 px-2 hover:bg-zinc-700 hover:text-white mb-2"
+            onClick={() => {
+              setScore(0);
+              setBoard(BOARD_CONFIG);
+              setCellConfig1(null);
+              setCellConfig2(null);
+              setCellConfig3(null);
+            }}
+          >
+            RESTART?
+          </button>
+        </div>
+      ) : null}
+      <DndContext onDragEnd={onDragEnd}>
+        <Board
+          board={board}
+          currentCells={currentCells}
+          isValidPlacement={(cellConfig, { row, col }) =>
+            paint(cellConfig, { row, col }, false)
+          }
+        />
+        <div className="flex items-center w-full justify-center m-2 gap-2">
+          {cellConfig1 ? (
+            <Cell
+              config={cellConfig1}
+              cellId={1}
+              isInValidPosition={({ row, col }: { row: number; col: number }) =>
+                paint(cellConfig1, { row, col }, false)
+              }
+            />
+          ) : null}
+          {cellConfig2 ? (
+            <Cell
+              config={cellConfig2}
+              cellId={2}
+              isInValidPosition={({ row, col }: { row: number; col: number }) =>
+                paint(cellConfig2, { row, col }, false)
+              }
+            />
+          ) : null}
+          {cellConfig3 ? (
+            <Cell
+              config={cellConfig3}
+              cellId={3}
+              isInValidPosition={({ row, col }: { row: number; col: number }) =>
+                paint(cellConfig3, { row, col }, false)
+              }
+            />
+          ) : null}
+        </div>
+      </DndContext>
       {score ? null : (
-        <p className="text-center">
-          You can grab pieces by holding under them for better visiblity
+        <p className="text-center px-4">
+          You can grab pieces by holding the handle / dot under them!
         </p>
       )}
     </div>
