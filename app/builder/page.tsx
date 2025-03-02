@@ -33,6 +33,19 @@ const Page = () => {
       >
         <button
           className="py-4 px-6 border-zinc-400 rounded-lg m-6 border-2 hover:bg-zinc-800 group"
+          onClick={() => setRedirectUrl("/builder/blocksudoku")}
+        >
+          <h1 className="text-4xl mb-2">Block-Sudoku</h1>
+          <p className="text-zinc-500 group-hover:text-white">
+            React version of famous game {'"blocksudoku"'}
+          </p>
+          <p className="text-zinc-500 group-hover:text-white">
+            With a few add ons and twists!
+          </p>
+        </button>
+
+        <button
+          className="py-4 px-6 border-zinc-400 rounded-lg m-6 border-2 hover:bg-zinc-800 group"
           onClick={() =>
             window.open("https://itest-prep.vercel.app/", "_blank")
           }
