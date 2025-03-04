@@ -37,10 +37,10 @@ const Page = () => {
         >
           <h1 className="text-4xl mb-2">Block-Sudoku</h1>
           <p className="text-zinc-500 group-hover:text-white">
-            React version of famous game {'"blocksudoku"'}
+            React version of famous game {'"block blast"'}
           </p>
           <p className="text-zinc-500 group-hover:text-white">
-            With a few add ons and twists!
+            Modified to run on react, no ads, no load times, no installs, works on your browser from the link
           </p>
         </button>
 
