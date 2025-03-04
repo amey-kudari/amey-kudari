@@ -47,6 +47,8 @@ export const Cell = ({
 
   const activeColor = isCell ? "bg-green-300" : cellBg + " ";
 
+  const computedWidth = (isCell || isDragging) ? cellWidth : cellWidth * 0.75;
+
   return (
     <div
       ref={setNodeRef}
@@ -67,16 +69,16 @@ export const Cell = ({
                 <div
                   touch-action="none"
                   key={100 + rowId * 10 + colId}
-                  className={`bg-opacity-70 ${val ? activeColor : "bg-opacity-0 border-transparent"
+                  className={`transition-all bg-opacity-70 ${val ? activeColor : "bg-opacity-0 border-transparent"
                     } border relative`}
-                  style={{ width: cellWidth, height: cellWidth }}
+                  style={{ width: computedWidth, height: computedWidth }}
                 ></div>
               ))}
             </div>
           ))}
         </div>
         {isCell ? null : (
-          <div className={`pt-16 py-4 flex items-center justify-center`}>
+          <div className={`${(isCell || isDragging) ? "pt-24" : "pt-16"} flex items-center justify-center`}>
             <div
               className={`${isDragging ? "bg-opacity-0" : "bg-white"
                 } h-8 w-8 rounded-full`}
