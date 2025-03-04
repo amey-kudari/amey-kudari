@@ -35,17 +35,24 @@ function Droppable({
     ? isValidPlacement(overConfig, { row: Math.floor(id / 10), col: id % 10 })
     : null;
 
+  const canOverBeValid = active?.id ? isValidPlacement(
+    currentCells[Number(String(active.id).split("_")[1]) - 1],
+    { row: Math.floor(id / 10), col: id % 10 }
+  ) : null;
+
+  if (!canOverBeValid) return null;
+
   return (
     <div
       ref={setNodeRef}
       style={style}
-      className={`absolute top-0 left-0 bg-opacity-0 ${
-        isOver ? "border-green-300" : "border-slate-300"
-      }`}
+      className={`absolute top-0 left-0 bg-opacity-0 ${isOver ? "border-green-300" : "border-slate-300"
+        }`}
     >
       {overConfig && isOverValid ? (
         <div className="absolute top-0 left-0 z-50" touch-action="none">
           <Cell
+            cellBg="bg-green-300"
             config={overConfig}
             cellId={id * 100}
             isCell
@@ -58,10 +65,12 @@ function Droppable({
 }
 
 export const Board = ({
+  cellBg,
   board,
   currentCells,
   isValidPlacement,
 }: {
+  cellBg: string;
   board: boolean[][];
   currentCells: (boolean[][] | null)[];
   isValidPlacement: (
@@ -81,9 +90,8 @@ export const Board = ({
           {row.map((val, colId) => (
             <div
               key={100 + rowId * 10 + colId}
-              className={`${
-                val ? "bg-blue-300" : "bg-slate-200"
-              } border border-slate-500 relative`}
+              className={`${val ? cellBg : "bg-slate-200"
+                } border border-slate-500 relative`}
               style={{ width: cellWidth, height: cellWidth }}
               touch-action="none"
             >

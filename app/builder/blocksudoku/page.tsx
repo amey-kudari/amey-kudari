@@ -4,13 +4,14 @@ import React, {
   useCallback,
   useEffect,
   useMemo,
-  useRef,
   useState,
 } from "react";
 import { Board } from "./components/Board";
 import { Cell } from "./components/Cell";
 import { DndContext } from "@dnd-kit/core";
 import { CELL_CONFIGS } from "./constants";
+import { useWindowSize } from 'react-use'
+import Confetti from 'react-confetti'
 
 const BOARD_CONFIG = new Array(8)
   .fill(0)
@@ -143,8 +144,57 @@ export default function Page() {
     }
   }, [bestScore, score]);
 
+  const cellBg = useMemo(() => {
+    const colorId = Math.floor(score / 7);
+    switch (colorId) {
+      case 0:
+        return "bg-blue-300";
+      case 1:
+        return "bg-red-300";
+      case 2:
+        return "bg-orange-300";
+      case 3:
+        return "bg-amber-300";
+      case 4:
+        return "bg-lime-500";
+      case 5:
+        return "bg-yellow-400";
+      default:
+        return "bg-pink-500";
+    }
+  }, [score]);
+
+  const { width, height } = useWindowSize()
+  console.log(width, height);
+
+  const [screenDim, setScreenDim] = useState({ w: 0, h: 0 });
+  useEffect(() => {
+    setScreenDim({
+      h: window.screen.availHeight,
+      w: window.screen.availWidth,
+    });
+  }, []);
+
+  const [showConfetti, setShowConfetti] = useState(false);
+
+  useEffect(() => {
+    if (score > 0 && score % 7 === 0) {
+      setShowConfetti(true);
+      const timeoutId = setTimeout(() => {
+        setShowConfetti(false);
+      }, 2500);
+      return () => clearTimeout(timeoutId)
+    }
+    return undefined
+  }, [score]);
+
   return (
-    <div touch-action="none" className="py-2">
+    <div className="py-2">
+      {showConfetti && (score % 7) < 2 ?
+        <Confetti
+          width={screenDim.w}
+          height={screenDim.h * 0.9}
+        /> : null}
       <h1 className="text-center text-3xl">
         {score > bestScore
           ? `New high score: ${score}`
@@ -162,6 +212,10 @@ export default function Page() {
               setCellConfig1(null);
               setCellConfig2(null);
               setCellConfig3(null);
+              const savedScore = window.localStorage.getItem("blocksudoku_bestscore");
+              if (savedScore) {
+                setBestScore(Number(savedScore));
+              }
             }}
           >
             RESTART?
@@ -170,15 +224,17 @@ export default function Page() {
       ) : null}
       <DndContext onDragEnd={onDragEnd}>
         <Board
+          cellBg={cellBg}
           board={board}
           currentCells={currentCells}
           isValidPlacement={(cellConfig, { row, col }) =>
             paint(cellConfig, { row, col }, false)
           }
         />
-        <div className="flex items-center w-full justify-center m-2 gap-2">
+        <div className="flex items-center justify-center m-2 gap-2 w-[calc(100%-8px)]">
           {cellConfig1 ? (
             <Cell
+              cellBg={cellBg}
               config={cellConfig1}
               cellId={1}
               isInValidPosition={({ row, col }: { row: number; col: number }) =>
@@ -188,6 +244,7 @@ export default function Page() {
           ) : null}
           {cellConfig2 ? (
             <Cell
+              cellBg={cellBg}
               config={cellConfig2}
               cellId={2}
               isInValidPosition={({ row, col }: { row: number; col: number }) =>
@@ -197,6 +254,7 @@ export default function Page() {
           ) : null}
           {cellConfig3 ? (
             <Cell
+              cellBg={cellBg}
               config={cellConfig3}
               cellId={3}
               isInValidPosition={({ row, col }: { row: number; col: number }) =>

@@ -5,6 +5,7 @@ import { useCellWidth } from "../hooks/useCellWidth";
 import { useMemo } from "react";
 
 export const Cell = ({
+  cellBg,
   config,
   cellId,
   isCell,
@@ -12,6 +13,7 @@ export const Cell = ({
     throw new Error(`Invalid requst using ${row},${col}`);
   },
 }: {
+  cellBg: string;
   config: boolean[][];
   cellId: number;
   isCell?: boolean;
@@ -30,8 +32,8 @@ export const Cell = ({
     });
   const style = transform
     ? {
-        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-      }
+      transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+    }
     : undefined;
 
   const isValidPos = useMemo(() => {
@@ -43,7 +45,7 @@ export const Cell = ({
     });
   }, [over, isInValidPosition, isCell]);
 
-  const activeColor = isCell ? "bg-green-300" : "bg-blue-300 ";
+  const activeColor = isCell ? "bg-green-300" : cellBg + " ";
 
   return (
     <div
@@ -54,9 +56,8 @@ export const Cell = ({
     >
       <div className="flex flex-col">
         <div
-          className={`flex flex-row justify-center items-center touch-none select-none ${
-            !isCell ? "pb-0" : "pb-0"
-          } ${isValidPos && isDragging && !isCell ? "opacity-0" : ""}`}
+          className={`flex flex-row justify-center items-center touch-none select-none ${!isCell ? "pb-0" : "pb-0"
+            } ${isValidPos && isDragging && !isCell ? "opacity-40" : ""}`}
           style={style}
           touch-action="none"
         >
@@ -66,9 +67,8 @@ export const Cell = ({
                 <div
                   touch-action="none"
                   key={100 + rowId * 10 + colId}
-                  className={`bg-opacity-70 ${
-                    val ? activeColor : "bg-opacity-0 border-transparent"
-                  } border relative`}
+                  className={`bg-opacity-70 ${val ? activeColor : "bg-opacity-0 border-transparent"
+                    } border relative`}
                   style={{ width: cellWidth, height: cellWidth }}
                 ></div>
               ))}
@@ -78,9 +78,8 @@ export const Cell = ({
         {isCell ? null : (
           <div className={`pt-16 py-4 flex items-center justify-center`}>
             <div
-              className={`${
-                isDragging ? "bg-opacity-0" : "bg-white"
-              } h-8 w-8 rounded-full`}
+              className={`${isDragging ? "bg-opacity-0" : "bg-white"
+                } h-8 w-8 rounded-full`}
             />
           </div>
         )}
