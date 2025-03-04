@@ -264,7 +264,7 @@ export default function Page() {
           ) : null}
         </div>
       </DndContext>
-      {score ? null : (
+      {score ? <a href="https://github.com/amey-kudari/amey-kudari/tree/main/app/builder/blocksudoku" className="block mt-4 w-full text-center text-blue-500 underline" target="_blank">Contribute!</a> : (
         <p className="text-center px-4">
           You can grab pieces by holding the handle / dot under them!
         </p>
