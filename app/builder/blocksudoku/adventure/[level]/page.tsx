@@ -149,7 +149,7 @@ export default function Page({ params }: { params: { level: string } }) {
       const mx = adprog ? Math.max(level, Number(adprog)) : level;
       window.localStorage.setItem("blocksudoku_adprog", String(mx))
     }
-  }, [rem]);
+  }, [rem, level]);
 
   const cellBg = useMemo(() => {
     const colorId = Math.floor(score / 7);
