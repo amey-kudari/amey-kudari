@@ -25,8 +25,8 @@ const getRandomConfig = () => {
 
 
 const getRem = (level: number) => {
-  if (level < 20) return level * 4 + 20;
-  return level + 80;
+  if (level < 20) return level * 4 + 40;
+  return level * 3 + 80;
 }
 
 export default function Page({ params }: { params: { level: string } }) {
